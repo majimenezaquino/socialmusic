@@ -14,7 +14,7 @@ app.use(fileUpload());
 
 
 
-app.post('/upload',[authentication,isUserAddress],async function(req, res) {
+app.post('/upload',[authentication],async function(req, res) {
   if (!req.files)
     return res.status(400).json({
         error: true,
@@ -44,8 +44,7 @@ app.post('/upload',[authentication,isUserAddress],async function(req, res) {
       author: body.author,
       description: body.description,
       genre :body.genre, //id of genre
-      user_public: userid, // id  of user
-      url: null
+      user_public: userid // id  of user
     }
     const music = await music_model.createMusic(new_music);
      music_name_id= music._id;
@@ -66,7 +65,7 @@ app.post('/upload',[authentication,isUserAddress],async function(req, res) {
       });
      const url_music={url: `${music_name_id}.${file_extension}`}
      music_model.updateMusic(music_name_id,`${music_name_id}.${file_extension}`).then(music=>{
-      
+
        return res.json({
             error:false,
             music: music,

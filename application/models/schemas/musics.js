@@ -16,7 +16,7 @@ const Schema = mongoose.Schema;
 const schemaMusic = new Schema({
 title:{ type: String, required: true},
 author:{ type: String, required: true},
-qualification:{ type: Number, max:5, min:1, default: 0},
+qualification:{ type: Number, max:5, min:0, default: 0},
 commentes_count:{ type: Number, default: 0},
 reactions:{ type: Number, default: 0},
 downloaded:{ type: Number, default: 0},

@@ -2,6 +2,7 @@ const express=require('express')
 const router =express.Router();
 //routes global
 router.use(require('../controller/upload-images')) //upload music
+router.use(require('../controller/upload-musics')) //upload music
 router.use(require('./routes_static')) //all routes
 router.use(require('./address')) //address
 router.use(require('./user'))

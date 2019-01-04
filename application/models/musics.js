@@ -60,12 +60,12 @@ async function deleteMusic(id,Music) {
 //     return musiccount;
 // }
 
-async function countMusicUploadByUserDays(id=0,days=30) {
+async function countMusicUploadByUserDays(user_id=0,days=30) {
    let date =new Date();
    let starDate =date.setDate(date.getDate()-days);
 
     let musiccount= await Musics.countDocuments({
-     user_published: id,
+     user_published: user_id,
       status: "active",
       "date_create": {"$gte": new Date(starDate), "$lt": new Date()}
     });

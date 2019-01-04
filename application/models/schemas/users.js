@@ -24,7 +24,7 @@ const schemaUsers = new Schema({
        lowercase: true
     },
   password: { type: String, required: true, select: false},
-  account: {
+  typeaccounts: {
      type: Schema.Types.ObjectId,
       ref: 'TypeAccounts',required:true
     },

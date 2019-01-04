@@ -113,22 +113,24 @@ async function getAllMusics(req, res) {
 
                       //===================================================================
                       //get account o user
-                       let account= await ModelTypeAccounts.getTypeAccountsById(user.account);
+                       let account= await ModelTypeAccounts.getTypeAccountsById(user.typeaccounts);
                        let daysAcount =account.days_upload;
                        let limit_upload =account.limit_upload;
 
                     //get count musics by user for mouths
-                     let userCountUploadMusics= await modelMusic.countMusicUploadByUserDays(user_id,daysAcount);
-                     if(userCountUploadMusics>=limit_upload){
-                       userInfomation.limit=true
+                     let music_upload_by_user= await modelMusic.countMusicUploadByUserDays(user._id,daysAcount) || 0;
+                     if(music_upload_by_user>=limit_upload){
+                       userInfomation.limit.coumplete=true;
                      }
+                     //limit
+                     userInfomation.limits.limit_upload=account[0].limit_upload-music_upload_by_user;
+                     console.log("user===>",user)
 
 
                       res.json({
                           error: false,
                           message: 'surccess',
-                          upload_info: userInfomation,
-                          music_count: music
+                          upload_info: userInfomation
                       })
                 }catch(ex){
                     res.status(400).json({
