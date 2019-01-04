@@ -14,6 +14,11 @@ async function getTypeAccounts() {
     return typeAccounts;
 }
 
+async function getTypeAccountsById(id=0) {
+    let typeAccounts= await schemaTypeAccounts.find({_id: id,status: 'active'})
+    return typeAccounts;
+}
+
 
 
 async function updateTypeAccounts(id,_typeaccount) {
@@ -38,5 +43,6 @@ async function updateTypeAccounts(id,_typeaccount) {
 module.exports={
     createTypeAccounts,
     getTypeAccounts,
+    getTypeAccountsById,
     updateTypeAccounts
 }

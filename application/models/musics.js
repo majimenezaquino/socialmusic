@@ -49,28 +49,29 @@ async function deleteMusic(id,Music) {
 }
 
 
-async function countMusicDocuments(id) {
-   let date =new Date();
-
-    let musiccount= await Musics.countDocuments({
-      // user_published: id,
-      status: "active",
-      date_create: {"$gte": new Date('2017-09-26T00:13:57.945Z'), "$lt": new Date('2019-09-21T00:13:57.945Z')}
-    });
-    return musiccount;
-}
-
 // async function countMusicDocuments(id) {
 //    let date =new Date();
-//    let starDate =new Date(date.setDate((date.getDate()-date.getDate() ) + 1));
 //
 //     let musiccount= await Musics.countDocuments({
-//       user_published: id,
+//       // user_published: id,
 //       status: "active",
-//       "date_create": {"$gte": new Date('2018-01-01T19:37:29.715'), "$lt": new Date()}
+//       date_create: {"$gte": new Date('2018-09-26T00:13:57.945Z'), "$lt": new Date()}
 //     });
 //     return musiccount;
 // }
+
+async function countMusicUploadByUserDays(id=0,days=30) {
+   let date =new Date();
+   let starDate =date.setDate(date.getDate()-days);
+
+    let musiccount= await Musics.countDocuments({
+     user_published: id,
+      status: "active",
+      "date_create": {"$gte": new Date(starDate), "$lt": new Date()}
+    });
+   console.log(new Date(starDate),"=====",new Date())
+    return musiccount;
+}
 
 module.exports={
     createMusic,
@@ -78,5 +79,5 @@ module.exports={
     getMusicById,
     updateMusic
     ,getMusicsByUser,
-    countMusicDocuments
+    countMusicUploadByUserDays
 }

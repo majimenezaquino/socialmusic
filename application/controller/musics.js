@@ -1,6 +1,7 @@
 
 const modelMusic= require('../models/musics');
 const ModelUser= require('../models/user');
+const ModelTypeAccounts= require('../models/type-accounts.js');
 const {PATH_FILES}=require('../config/index')
 
 async function getAllMusics(req, res) {
@@ -83,7 +84,12 @@ async function getAllMusics(req, res) {
                   let userInfomation={
                     user: 'incomplet',
                     address: 'incomplet',
-                    limit: true,
+                    limits: {
+                      coumplete: false,
+                      limit_upload: 0,
+                      upload: 0
+
+                    }
                   }
                   //check info of user required
                       let user= await ModelUser.getUserById(user_id);
@@ -105,12 +111,24 @@ async function getAllMusics(req, res) {
                         })
                       }
 
+                      //===================================================================
+                      //get account o user
+                       let account= await ModelTypeAccounts.getTypeAccountsById(user.account);
+                       let daysAcount =account.days_upload;
+                       let limit_upload =account.limit_upload;
 
-                     let music= await modelMusic.countMusicDocuments(user_id);
-                      console.log("music==>",music)
+                    //get count musics by user for mouths
+                     let userCountUploadMusics= await modelMusic.countMusicUploadByUserDays(user_id,daysAcount);
+                     if(userCountUploadMusics>=limit_upload){
+                       userInfomation.limit=true
+                     }
+
+
                       res.json({
                           error: false,
                           message: 'surccess',
+                          upload_info: userInfomation,
+                          music_count: music
                       })
                 }catch(ex){
                     res.status(400).json({

@@ -16,7 +16,7 @@ const SchemaTypeAccounts = new Schema({
         required: true,
         default: 0
     },
-    month: {
+    days_upload: {
         type: Number,
         required: true,
         default: 0

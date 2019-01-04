@@ -10,7 +10,7 @@ async function createTypeAccounts(req, res) {
         let typeaccountObject={
             name: body.name,
             limit_upload: body.limit_upload,
-            month: body.limit_month
+            days_upload: body.limit_month
       }
 
         let typeaccount= await modelTypeAccounts.createTypeAccounts(typeaccountObject);
