@@ -1,6 +1,7 @@
 
 const modelMusic= require('../models/musics');
 const ModelUser= require('../models/user');
+const ModelAddress= require('../models/address');
 const ModelTypeAccounts= require('../models/type-accounts.js');
 const {PATH_FILES}=require('../config/index')
 
@@ -83,11 +84,12 @@ async function getAllMusics(req, res) {
                 let user_id= req.user_id || 0;
                   let userInfomation={
                     user: 'incomplet',
-                    address: 'incomplet',
+                    address: false,
                     limits: {
                       coumplete: false,
-                      limit_upload: 0,
-                      upload: 0
+                      available: 0,
+                      upload: 0,
+                      upload_month: 0,
 
                     }
                   }
@@ -119,14 +121,19 @@ async function getAllMusics(req, res) {
 
                     //get count musics by user for mouths
                      let music_upload_by_user= await modelMusic.countMusicUploadByUserDays(user._id,daysAcount) || 0;
-                     if(music_upload_by_user>=limit_upload){
-                       userInfomation.limit.coumplete=true;
+                     if(parseInt(music_upload_by_user)>=parseInt(account[0].limit_upload)){
+                       userInfomation.limits.coumplete=true;
                      }
-                     //limit
-                     userInfomation.limits.limit_upload=account[0].limit_upload-music_upload_by_user;
-                     console.log("user===>",user)
 
+                     userInfomation.limits.available=account[0].limit_upload-music_upload_by_user;
+                     userInfomation.limits.upload_month=music_upload_by_user;
 
+                      //==========================================================================
+                      //check address
+                        let address= await ModelAddress.getAddressByUser(user_id);
+                        if(address.length>0){
+                          userInfomation.address= true;
+                        }
                       res.json({
                           error: false,
                           message: 'surccess',

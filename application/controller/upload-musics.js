@@ -1,12 +1,15 @@
 const express = require('express');
 const music_model =require('../models/musics')
 const {authentication}=require('../middlewares/authentication')
+const {checkUserUploadMusics}=require('../middlewares/check-upload-music')
 const {UPLOADPATH}=require('../config/index')
+const { getAudioDurationInSeconds } = require('get-audio-duration')
 const app = express();
 
 const multer =require('multer')
-const MAXSIZE_UPLOAD = 60*1024*1024; //un mega bite
+const MAXSIZE_UPLOAD = 2*1024*1024; //un mega bite
 let filesize=undefined;
+let audio_url= undefined;
 //receive a file name and return a extension
 function getExtension(_filename){
    let extension =_filename.split('.');
@@ -22,7 +25,7 @@ function getRandomArbitrary(min, max) {
 
 
 
-app.post('/upload/music',authentication, function (req, res, next) {
+app.post('/upload/music',[authentication,checkUserUploadMusics], function (req, res, next) {
    // req.file is the `avatar` file
 const user_id =  req.user_id
 
@@ -31,11 +34,10 @@ const user_id =  req.user_id
          cb(null, `${UPLOADPATH}/musics`);
        },
        filename: function (req, file, cb) {
-         cb(null, `${Date.now()}.${getRandomArbitrary(00,100)}.${getExtension(file.originalname)}`)
+         audio_url=`${Date.now()}.${getRandomArbitrary(00,100)}.${getExtension(file.originalname)}`;
+         cb(null, audio_url)
        },
-       onFileUploadStart: function (file) {
-           console.log(file.originalname + ' is starting ...')
-       }
+
 
      });
 
@@ -46,7 +48,7 @@ const user_id =  req.user_id
 
        fileFilter: function (req, file, callback) {
         let ext = getExtension(file.originalname);
-        if (ext !== 'png' && ext !== 'jpg'  && ext !== 'mp3') {
+        if (ext !== 'wpw' && ext !== 'ogg'  && ext !== 'midi' && ext !== 'mp3') {
            return callback(res.status(400).json({
                error: true,
                message: 'file not allower'
@@ -85,7 +87,11 @@ const user_id =  req.user_id
                message: err.MulterError
            });
          }
+         // check audios
+        //get duration auios
+      let getDuraction= await  getAudioDurationInSeconds(`${UPLOADPATH}/musics/${audio_url}`)
          //data musics
+
     let body= req.body
          const new_music ={
            title: body.title,
@@ -93,7 +99,10 @@ const user_id =  req.user_id
            description: body.description,
            genre :body.genre, //id of genre
            user_published: user_id,
-           qualification: 0
+           qualification: 0,
+           duration: getDuraction,
+           size: req.file.size,
+           url: req.file.filename
             // id  of user
          }
 

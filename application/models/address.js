@@ -22,7 +22,7 @@ async function getAddressById(id) {
 }
 
 async function getAddressByUser(_user_id='') {
-    let address= await Addresss.find({user: _user_id})
+    let address= await Addresss.find({user: _user_id, status: 'active'})
     return address;
 }
 

@@ -69,7 +69,6 @@ async function countMusicUploadByUserDays(user_id=0,days=30) {
       status: "active",
       "date_create": {"$gte": new Date(starDate), "$lt": new Date()}
     });
-   console.log(new Date(starDate),"=====",new Date())
     return musiccount;
 }
 
