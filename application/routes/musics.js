@@ -8,7 +8,7 @@ const {authentication ,checkAdminRol}=require('../middlewares/authentication')
 // router.get('/music',[authentication,checkAdminRol],Music.getAllMusics)
 router.get('/musics',Music.getAllMusics)
 router.get('/musics/:id',Music.getMusicById)
-router.get('/musicsbyuser/:id',Music.getMusicsByUser)
+router.get('/musicsbyuser/:id?',Music.getMusicsByUser)
 router.get('/checkuseruploadmusics',[authentication],Music.checkUserUploadMusics);
 //router.delete('/music/:id',[authentication,checkAdminRol],Music.disabledMusic)
 

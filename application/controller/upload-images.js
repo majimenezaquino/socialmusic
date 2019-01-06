@@ -2,6 +2,7 @@
 const music_model =require('../models/musics')
 const {authentication}=require('../middlewares/authentication')
 const {UPLOADPATH}=require('../config/index')
+const modelUser =require('../models/user')
 const app = express();
 
 const multer =require('multer')
@@ -22,9 +23,7 @@ function getRandomArbitrary(min, max) {
 
 
 
-app.post('/upload/image', function (req, res, next) {
-    // req.file is the `avatar` file
-    console.log("estoy aqui")
+app.post('/upload/image',[authentication], function (req, res, next) {
      let storage = multer.diskStorage({
         destination: function (req, file, cb) {
           cb(null, `${UPLOADPATH}/images`);
@@ -70,7 +69,7 @@ app.post('/upload/image', function (req, res, next) {
      }).single( 'image')
 
     // req.body will hold the text fields, if there were any
-    upload(req,res,function(err){
+    upload(req,res,async function(err){
         if (err instanceof multer.MulterError) {
             // A Multer error occurred when uploading.
            return res.status(200).json({
@@ -84,9 +83,12 @@ app.post('/upload/image', function (req, res, next) {
                 message: err.MulterError
             });
           }
+              let user_update ={profile_picture: req.file.filename};
+               let user= await modelUser.updateUser(req.user_id,user_update);
         res.status(200).json({
             error: false,
-            message: `file uploaded.`
+            message: `file uploaded.`,
+            user
         });
     });
 

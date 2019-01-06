@@ -49,16 +49,14 @@ async function deleteMusic(id,Music) {
 }
 
 
-// async function countMusicDocuments(id) {
-//    let date =new Date();
-//
-//     let musiccount= await Musics.countDocuments({
-//       // user_published: id,
-//       status: "active",
-//       date_create: {"$gte": new Date('2018-09-26T00:13:57.945Z'), "$lt": new Date()}
-//     });
-//     return musiccount;
-// }
+async function countMusicDocuments(id) {
+   let date =new Date();
+    let musiccount= await Musics.countDocuments({
+      user_published: id,
+      status: "active",
+    });
+    return musiccount;
+}
 
 async function countMusicUploadByUserDays(user_id=0,days=30) {
    let date =new Date();
@@ -78,5 +76,6 @@ module.exports={
     getMusicById,
     updateMusic
     ,getMusicsByUser,
+    countMusicDocuments,
     countMusicUploadByUserDays
 }

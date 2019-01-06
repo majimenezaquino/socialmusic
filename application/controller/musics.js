@@ -55,7 +55,7 @@ async function getAllMusics(req, res) {
         async function getMusicsByUser(req, res) {
             try{
                  //var for pagination
-            let user_id= req.params.id || 0;
+            let user_id= req.params.id ||  req.user_id;
             let _since=req.query.since || 0;
             let _limit= 10; //nomber of item
             _since=Number(_since)
@@ -83,12 +83,11 @@ async function getAllMusics(req, res) {
                 //declare defaull infor user need to upload music
                 let user_id= req.user_id || 0;
                   let userInfomation={
-                    user: 'incomplet',
+                    user_complete: false,
                     address: false,
                     limits: {
                       coumplete: false,
                       available: 0,
-                      upload: 0,
                       upload_month: 0,
 
                     }
@@ -104,7 +103,7 @@ async function getAllMusics(req, res) {
                         && user.birth_date!=''
                         && user.phone!=''
                       ){
-                        userInfomation.user='complete'
+                        userInfomation.user_complete=true;
                       }else{
                         return res.json({
                             error: false,
