@@ -1,10 +1,7 @@
 const Country =require('./schemas/countries')
 
-async function getAllCountries(_since=0,_limit=10,_lenguage='en') {
-   // _lenguage=_lenguage.toUpperCase()
-    let country= await Country.find({lenguage: _lenguage})
-    .skip(_since)
-    .limit(_limit);
+async function getAllCountries() {
+    let country= await Country.find({})
     return country;
 }
 

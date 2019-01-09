@@ -11,7 +11,7 @@ async function createAddress(req, res) {
           user: body.user,
           street: body.street,
           house_number: body.house_number,
-          postcode: body.postcode || ''
+          postcode: body.postcode || '' 
       }
         let address= await modelAddress.createAddress(inputAddress);
           res.json({

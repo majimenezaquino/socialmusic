@@ -8,7 +8,7 @@ async function getAllCountries(req, res) {
 
         let page_limit =10;
         let page_since =req.query.id || 0;
-     const countries = await modelCountry.getAllCountries(page_since,page_limit)
+     const countries = await modelCountry.getAllCountries()
      res.json({
         error: false,
         message: 'surccess',
