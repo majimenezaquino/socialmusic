@@ -5,9 +5,10 @@ const {authentication ,checkAdminRol}=require('../middlewares/authentication')
 
 //address
 router.post('/address',[authentication],Address.createAddress)
+router.put('/address',[authentication],Address.updateAddress)
 // router.put('/address/:id',[authentication,checkAdminRol],Genre.updateGenre)
 // router.get('/address/',[authentication,checkAdminRol],Genre.getAlladdress)
 //id user
- router.get('/address/:user',Address.getAddressByUser)
+ router.get('/address',[authentication],Address.getAddressByUser)
 // router.delete('/address/:id',[authentication,checkAdminRol],Genre.disabledGenre)
 module.exports=router;

@@ -8,10 +8,10 @@ async function createAddress(req, res) {
    const  inputAddress={
           country: body.country,
           city: body.city,
-          user: body.user,
+          user: req.user_id,
           street: body.street,
           house_number: body.house_number,
-          postcode: body.postcode || '' 
+          postcode: body.postcode || ''
       }
         let address= await modelAddress.createAddress(inputAddress);
           res.json({
@@ -30,10 +30,19 @@ async function createAddress(req, res) {
 
 
 
-    async function getAddressByUser(req, res) {
+    async function updateAddress(req, res) {
         try{
-        let user_id= req.params.user || 0;
-            let address= await modelAddress.getAddressByUser(user_id);
+         const body=req.body;
+
+       const  addresObj={
+              country: body.country,
+              city: body.city,
+              user: req.user_id,
+              street: body.street,
+              house_number: body.house_number,
+              postcode: body.postcode || ''
+          }
+            let address= await modelAddress.updateAddress(body._id,addresObj);
               res.json({
                   error: false,
                   message: 'surccess, address was cread',
@@ -51,7 +60,48 @@ async function createAddress(req, res) {
 
 
 
+    async function getAddressByUser(req, res) {
+        try{
+        let user_id= req.user_id
+            let address= await modelAddress.getAddressByUser(user_id);
+              res.json({
+                  error: false,
+                  message: 'surccess, address was cread',
+                  address: address[0]
+              })
+        }catch(ex){
+            res.status(400).json({
+                error: true,
+                message: ex
+
+            })
+        }
+        }
+/*
+
+        async function updateAddress(req, res) {
+            try{
+            let user_id= req.params.user || 0;
+                let address= await modelAddress.updateAddress(user_id);
+                  res.json({
+                      error: false,
+                      message: 'surccess, address was cread',
+                      address
+                  })
+            }catch(ex){
+                res.status(400).json({
+                    error: true,
+                    message: ex
+
+                })
+            }
+            }
+
+*/
+
+
 module.exports={
     createAddress,
-    getAddressByUser
+    getAddressByUser,
+    updateAddress
 }
