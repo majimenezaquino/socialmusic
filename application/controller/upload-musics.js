@@ -26,6 +26,7 @@ function getRandomArbitrary(min, max) {
 
 
 app.post('/upload/music',[authentication,checkUserUploadMusics], function (req, res, next) {
+
    // req.file is the `avatar` file
 const user_id =  req.user_id
 
@@ -55,17 +56,6 @@ const user_id =  req.user_id
            }));
         }
 
-
-/*
-        if (file.) {
-           return callback(res.status(400).json({
-               error: true,
-               message: 'file not allower'
-           }));
-        }
-        */
-
-
             callback(null, true)
 
     }
@@ -77,8 +67,8 @@ const user_id =  req.user_id
        if (err instanceof multer.MulterError) {
            // A Multer error occurred when uploading.
           return res.status(200).json({
-               error: false,
-               message: err.MulterError
+               error: true,
+               message: err
            });
          } else if (err) {
            // An unknown error occurred when uploading.
@@ -94,11 +84,11 @@ const user_id =  req.user_id
 
     let body= req.body
          const new_music ={
-           title: body.title,
-           author: body.author,
+          title: body.title,
            description: body.description,
+           tags: body.tags,
            genre :body.genre, //id of genre
-           user_published: user_id,
+          user_published: user_id,
            qualification: 0,
            duration: getDuraction,
            size: req.file.size,
@@ -113,6 +103,7 @@ const user_id =  req.user_id
            error: false,
            message: `file uploaded.`,
            user_id: user_id,
+           info_music: req.info_music,
            music
        });
    });

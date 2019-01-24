@@ -3,6 +3,7 @@ const router =express.Router();
 const Address=require('../controller/address')
 const {authentication ,checkAdminRol}=require('../middlewares/authentication')
 
+
 //address
 router.post('/address',[authentication],Address.createAddress)
 router.put('/address',[authentication],Address.updateAddress)

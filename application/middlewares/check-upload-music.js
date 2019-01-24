@@ -94,7 +94,7 @@ const checkUserUploadMusics=async function(req, res,next) {
                 message: 'you already exceeded the maximum musics upload.'
               })
             }
-
+            req.info_music =userInfomation;
         next();
     }catch(ex){
         res.status(400).json({

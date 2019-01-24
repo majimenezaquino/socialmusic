@@ -14,8 +14,8 @@ const status={
 const Schema = mongoose.Schema;
 
 const schemaMusic = new Schema({
-title:{ type: String, required: true},
-author:{ type: String, required: true},
+title:{ type: String, required: false},
+author:{ type: String, required: false},
 qualification:{ type: Number, max:5, min:0, default: 0},
 commentes_count:{ type: Number, default: 0},
 reactions:{ type: Number, default: 0},
@@ -28,8 +28,8 @@ tags: String,
 duration:{type: Number, default: 0},
 size:{type: Number, default: 0},
 user_published: {type: Schema.Types.ObjectId, ref: 'Users'},
-genre:{type: Schema.Types.ObjectId, ref: 'Genres'},
-img: {type: String, default: null},
+genre:{type: Schema.Types.ObjectId, ref: 'Genres', required: false},
+img: {type: String, default: null, required:false},
 url: String,
 privacy: {
     type: String,
@@ -49,7 +49,7 @@ date_update: {
 status:{
      type: String,
      enum: status,
-     default: 'active'
+     default: 'pending'
    }
 });
 

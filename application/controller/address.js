@@ -45,8 +45,8 @@ async function createAddress(req, res) {
             let address= await modelAddress.updateAddress(body._id,addresObj);
               res.json({
                   error: false,
-                  message: 'surccess, address was cread',
-                  address
+                  message: 'surccess, address was update',
+                  address: address
               })
         }catch(ex){
             res.status(400).json({
@@ -66,7 +66,7 @@ async function createAddress(req, res) {
             let address= await modelAddress.getAddressByUser(user_id);
               res.json({
                   error: false,
-                  message: 'surccess, address was cread',
+                  message: 'surccess',
                   address: address[0]
               })
         }catch(ex){

@@ -37,6 +37,14 @@ async function getMusicsByUser(user_id='',_since=0,_limit=10) {
 }
 
 
+async function getMusicsIncompleteByUser(user_id='') {
+  let music= await Musics.find({status: 'pending',privacy: 'public', user_published: user_id})
+  .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
+  .populate({ path: 'genre', select: 'name' })
+  return music;
+}
+
+
 async function updateMusic(id,_music) {
     let musics= await Musics.findOneAndUpdate({_id:id},_music);
     return musics;
@@ -64,7 +72,7 @@ async function countMusicUploadByUserDays(user_id=0,days=30) {
 
     let musiccount= await Musics.countDocuments({
      user_published: user_id,
-      status: "active",
+      status: { $in: ["active", "pendings"] },
       "date_create": {"$gte": new Date(starDate), "$lt": new Date()}
     });
     return musiccount;
@@ -77,5 +85,6 @@ module.exports={
     updateMusic
     ,getMusicsByUser,
     countMusicDocuments,
-    countMusicUploadByUserDays
+    countMusicUploadByUserDays,
+    getMusicsIncompleteByUser
 }
