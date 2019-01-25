@@ -95,6 +95,37 @@ const user_id =  req.user_id
            url: req.file.filename
             // id  of user
          }
+         //check response for user
+
+         if(body.title===undefined || body.title==''){
+              return  res.status(400).json({
+                   error: true,
+                   message: `the title is required`
+               });
+         }
+
+         if(body.description===undefined || body.description==''){
+              return  res.status(400).json({
+                   error: true,
+                   message: `the description is required`
+               });
+         }
+
+         if(body.tags===undefined || body.tags==''){
+              return  res.status(400).json({
+                   error: true,
+                   message: `the tags is required`
+               });
+         }
+
+         if(body.genre==undefined || body.genre==''){
+              return  res.status(400).json({
+                   error: true,
+                   message: `the genre is required`
+               });
+         }
+  console.log("nueva musica", new_music)
+
 
          const music = await music_model.createMusic(new_music);
 

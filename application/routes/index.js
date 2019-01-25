@@ -19,5 +19,6 @@ router.use(require('./musician'))
 router.use(require('./user_musician'))
 router.use(require('./follower'));
 router.use(require('./type-accounts'));
+router.use(require('./privacies.js'));
 
 module.exports=router;

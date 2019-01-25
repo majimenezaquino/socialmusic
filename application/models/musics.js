@@ -38,7 +38,7 @@ async function getMusicsByUser(user_id='',_since=0,_limit=10) {
 
 
 async function getMusicsIncompleteByUser(user_id='') {
-  let music= await Musics.find({status: 'pending',privacy: 'public', user_published: user_id})
+  let music= await Musics.find({status: 'pending', user_published: user_id})
   .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
   .populate({ path: 'genre', select: 'name' })
   return music;

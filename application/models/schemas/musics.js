@@ -1,15 +1,15 @@
 const mongoose=require('mongoose')
 
- const genres={
-  values: ['ADMIN_ROL','BASIC_ROL','VIST_ROL'],
-  message: '{VALUE}  no  is rol  allower'
- };
+
 
 //status allower
 const status={
     values: ['active','disabled','pending','blocked'],
     message: '{VALUE} no is status allower'
 }
+
+
+
 
 const Schema = mongoose.Schema;
 
@@ -27,15 +27,12 @@ description: String,
 tags: String,
 duration:{type: Number, default: 0},
 size:{type: Number, default: 0},
+download_allowed:{type:Boolean , default: false,required:false},
 user_published: {type: Schema.Types.ObjectId, ref: 'Users'},
 genre:{type: Schema.Types.ObjectId, ref: 'Genres', required: false},
 img: {type: String, default: null, required:false},
 url: String,
-privacy: {
-    type: String,
-    enum: ['public','privite'],
-    default: 'public'
-},
+privacy: {type: Schema.Types.ObjectId, ref: 'Privacies', required: false},
 date_create: {
     type: Date,
     required: true,
