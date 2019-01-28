@@ -46,7 +46,7 @@ async function getMusicsIncompleteByUser(user_id='') {
 
 
 async function updateMusic(id,_music) {
-    let musics= await Musics.findOneAndUpdate({_id:id},_music);
+    let musics= await Musics.findOneAndUpdate({_id:id},_music,{new: true});
     return musics;
 }
 

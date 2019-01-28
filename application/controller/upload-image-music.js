@@ -23,7 +23,7 @@ function getRandomArbitrary(min, max) {
 
 
 
-app.post('/upload/image',[authentication], function (req, res, next) {
+app.put('/upload/music',[authentication], function (req, res, next) {
      let storage = multer.diskStorage({
         destination: function (req, file, cb) {
           cb(null, `${UPLOADPATH}/images`);
@@ -83,12 +83,19 @@ app.post('/upload/image',[authentication], function (req, res, next) {
                 message: err.MulterError
             });
           }
-              let user_update ={profile_picture: req.file.filename};
-               let user= await modelUser.updateUser(req.user_id,user_update);
+
+            let  music_update ={
+              download_allowed:  req.body.download_allowed,
+              img: req.file.filename,
+              privacy:  req.body.privacy,
+              status: 'active'
+            }
+             let music_up = await music_model.updateMusic(req.body.id,music_update);
+
         res.status(200).json({
             error: false,
             message: `file uploaded.`,
-            user
+            music: music_up
         });
     });
 
