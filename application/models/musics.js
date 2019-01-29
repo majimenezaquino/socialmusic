@@ -1,4 +1,5 @@
 const Musics =require('./schemas/musics')
+const Privacy =require('./schemas/privacies')
 
 
 
@@ -9,10 +10,27 @@ async function createMusic(_music) {
 
 
 
-async function getAllMusics(user_id=undefined,_since,_limit) {
-    let musics= await Musics.find({status: 'active',privacy: 'public'})
+async function getAllMusics(_since,_limit) {
+
+    let musics= await Musics.find({status: 'active'})
     .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
     .populate({ path: 'genre', select: 'name' })
+    .populate({ path: 'privacy', select: ['name','description'] })
+    .skip(_since)
+    .limit(_limit);
+    return musics;
+}
+
+
+async function getAllMusicsPublic(_since=0,_limit=0,privacy_name="públicas") {
+
+   let _privacy= await Privacy.find({status: 'active', name: privacy_name});
+    console.log(_privacy[0]._id)
+    let musics= await Musics.find({status: 'active', privacy: _privacy[0]._id})
+    .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
+    .populate({ path: 'genre', select: 'name' })
+    .populate({ path: 'privacy',
+     select: ['name','description'] })
     .skip(_since)
     .limit(_limit);
     return musics;
@@ -81,6 +99,7 @@ async function countMusicUploadByUserDays(user_id=0,days=30) {
 module.exports={
     createMusic,
     getAllMusics,
+    getAllMusicsPublic,
     getMusicById,
     updateMusic
     ,getMusicsByUser,

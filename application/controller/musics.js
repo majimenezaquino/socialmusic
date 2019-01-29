@@ -1,7 +1,6 @@
 
 const modelMusic= require('../models/musics');
 const ModelUser= require('../models/user');
-const ModelAddress= require('../models/address');
 const ModelTypeAccounts= require('../models/type-accounts.js');
 const {PATH_FILES}=require('../config/index')
 
@@ -12,12 +11,10 @@ async function getAllMusics(req, res) {
     let _limit= 10; //nomber of item
     _since=Number(_since)
 
-          let musicscunt= await modelMusic.countMusicDocuments();
           let _musics= await modelMusic.getAllMusics(_since,_limit);
 
           res.json({
               error: false,
-              musicscunt,
               message: 'surccess',
               musics: _musics
           })
@@ -29,6 +26,31 @@ async function getAllMusics(req, res) {
         })
     }
     }
+
+
+
+    async function getAllMusicsPublic(req, res) {
+        try{
+             //var for pagination
+        let _since=req.query.since || 0;
+        let _limit= 10; //nomber of item
+        _since=Number(_since)
+
+              let _musics= await modelMusic.getAllMusicsPublic(_since,_limit);
+
+              res.json({
+                  error: false,
+                  message: 'surccess',
+                  musics: _musics
+              })
+        }catch(ex){
+            res.status(400).json({
+                error: true,
+                message: 'error url not allower'
+
+            })
+        }
+        }
 
 
     async function getMusicById(req, res) {
@@ -176,6 +198,7 @@ async function getAllMusics(req, res) {
 module.exports={
 getAllMusics,
 getMusicById,
+getAllMusicsPublic,
 getMusicsByUser,
 checkUserUploadMusics,
 getMusicsIncompleteByUser
