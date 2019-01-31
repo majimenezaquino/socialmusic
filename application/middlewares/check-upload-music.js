@@ -13,6 +13,7 @@ const checkUserUploadMusics=async function(req, res,next) {
       let userInfomation={
         user_complete_info: false,
         address: false,
+        music_pending: false,
         limits: {
           complete: false,
           available: 0,
@@ -22,6 +23,17 @@ const checkUserUploadMusics=async function(req, res,next) {
       }
       //check info of user required
           let user= await ModelUser.getUserById(user_id);
+
+          let music_p =await modelMusic.getMusicsIncompleteByUser(user_id);
+
+          if(music_p.length>0){
+            music_pending=true;
+            console.log("music pending")
+            return res.status(400).json({
+              error: true,
+              message: 'have a music pending'
+            })
+          }
           if(
             user.status=='active'
             && user.name!=''

@@ -23,9 +23,7 @@ async function getAllMusics(_since,_limit) {
 
 
 async function getAllMusicsPublic(_since=0,_limit=0,privacy_name="públicas") {
-
    let _privacy= await Privacy.find({status: 'active', name: privacy_name});
-    console.log(_privacy[0]._id)
     let musics= await Musics.find({status: 'active', privacy: _privacy[0]._id})
     .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
     .populate({ path: 'genre', select: 'name' })
@@ -55,7 +53,10 @@ async function getMusicsByUser(user_id='',_since=0,_limit=10) {
 }
 
 
-async function getMusicsIncompleteByUser(user_id='') {
+
+
+
+async function getMusicsIncompleteByUser(user_id) {
   let music= await Musics.find({status: 'pending', user_published: user_id})
   .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
   .populate({ path: 'genre', select: 'name' })
