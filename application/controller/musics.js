@@ -2,6 +2,7 @@
 const modelMusic= require('../models/musics');
 const ModelUser= require('../models/user');
 const ModelTypeAccounts= require('../models/type-accounts.js');
+const ModelAddress= require('../models/address.js');
 const {PATH_FILES}=require('../config/index')
 
 async function getAllMusics(req, res) {
@@ -134,12 +135,13 @@ async function getAllMusics(req, res) {
                     user_complete: false,
                     address: false,
                     limits: {
-                      coumplete: false,
+                      complete: false,
                       available: 0,
                       upload_month: 0,
 
                     }
                   }
+
                   //check info of user required
                       let user= await ModelUser.getUserById(user_id);
                       if(
@@ -153,7 +155,7 @@ async function getAllMusics(req, res) {
                       ){
                         userInfomation.user_complete=true;
                       }else{
-                        return res.json({
+                        return res.status(400).json({
                             error: false,
                             canupload: false,
                             message: 'user information is incomplet',
@@ -169,7 +171,7 @@ async function getAllMusics(req, res) {
                     //get count musics by user for mouths
                      let music_upload_by_user= await modelMusic.countMusicUploadByUserDays(user._id,daysAcount) || 0;
                      if(parseInt(music_upload_by_user)>=parseInt(account[0].limit_upload)){
-                       userInfomation.limits.coumplete=true;
+                       userInfomation.limits.complete=true;
                      }
 
                      userInfomation.limits.available=account[0].limit_upload-music_upload_by_user;
@@ -178,6 +180,7 @@ async function getAllMusics(req, res) {
                       //==========================================================================
                       //check address
                         let address= await ModelAddress.getAddressByUser(user_id);
+                        console.log("pass ===")
                         if(address.length>0){
                           userInfomation.address= true;
                         }
