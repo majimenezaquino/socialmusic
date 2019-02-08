@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"socialmusic.privacies"},{"v":2,"unique":true,"key":{"name":1},"name":"name_1","ns":"socialmusic.privacies","background":true}],"uuid":"8a31300ce9694dd2b2cc7936918ca2f2"}

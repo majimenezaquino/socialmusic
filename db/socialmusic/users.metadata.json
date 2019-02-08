@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"socialmusic.users"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","ns":"socialmusic.users","background":true}],"uuid":"a3623be877344d63bb81ca82dfc69ec1"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"socialmusic.users"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","ns":"socialmusic.users","background":true}],"uuid":"334096d36d4d46acb0567b50baa17f11"}

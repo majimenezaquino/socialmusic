@@ -28,6 +28,7 @@ const schemaUsers = new Schema({
      type: Schema.Types.ObjectId,
       ref: 'TypeAccounts',required:true
     },
+  update_typeaccounts: { type: Date, default: Date.now()},
   birth_date: { type: Date, required: false},
   phone: { type: String, required: false},
   gender: { type: String, enum: sex},
@@ -37,6 +38,7 @@ const schemaUsers = new Schema({
   followee_count: {type: Number, default: 0},
   language: {type: String,default: "en"},
   approve_followee: {type: Boolean, default: false},
+
   status:{
       type: String,
       enum: status,

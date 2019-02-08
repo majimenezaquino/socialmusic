@@ -134,6 +134,7 @@ async function getAllMusics(req, res) {
                   let userInfomation={
                     user_complete: false,
                     address: false,
+                    date_account: undefined,
                     limits: {
                       complete: false,
                       available: 0,
@@ -154,6 +155,7 @@ async function getAllMusics(req, res) {
                         && user.phone!=''
                       ){
                         userInfomation.user_complete=true;
+                        userInfomation.date_account=user.update_typeaccounts;
                       }else{
                         return res.status(400).json({
                             error: false,

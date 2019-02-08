@@ -35,7 +35,7 @@ app.post('/upload/image',[authentication], function (req, res, next) {
             console.log(file.originalname + ' is starting ...')
         }
 
-      });
+      }); 
 
 
     let upload = multer({
