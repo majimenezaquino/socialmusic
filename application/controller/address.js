@@ -13,7 +13,18 @@ async function createAddress(req, res) {
           house_number: body.house_number,
           postcode: body.postcode || ''
       }
+      let user_id= req.user_id
+          let get_address= await modelAddress.getAddressByUser(user_id);
+          if(get_address.length>0){
+          return  res.status(200).json({
+                error: true,
+                message: 'Error, Ya tiene una dirección registrada.',
+                address:get_address
+            })
+          }
+
         let address= await modelAddress.createAddress(inputAddress);
+
           res.json({
               error: false,
               message: 'surccess, address was cread',
@@ -67,7 +78,7 @@ async function createAddress(req, res) {
               res.json({
                   error: false,
                   message: 'surccess',
-                  address: address[0]
+                  address
               })
         }catch(ex){
             res.status(400).json({
