@@ -7,7 +7,7 @@ async function createFallowers(_Fallowers) {
     return fallowers;
 }
 
-async function getAllFallowersByUser(_user=0,_since=0, _limit=10) {
+async function getAllFallowersByUser(_user=0,_since=0, _limit=10) { 
     let fallowers= await Fallowers.find({user_followee: _user})
     .populate({path: 'user_follower', select: ['name','last_name','profile_picture']})
     .populate({path: 'user_followee', select: ['name','last_name','profile_picture']})
@@ -17,7 +17,6 @@ async function getAllFallowersByUser(_user=0,_since=0, _limit=10) {
 }
 
 async function checkUserFAllowier(follower,followee){
-
     let fallowers= await Fallowers.countDocuments({user_followee: followee, user_follower: follower, status: 'active'});
     return fallowers;
 }

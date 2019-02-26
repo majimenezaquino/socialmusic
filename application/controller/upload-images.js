@@ -3,8 +3,8 @@ const music_model =require('../models/musics')
 const {authentication}=require('../middlewares/authentication')
 const {UPLOADPATH}=require('../config/index')
 const modelUser =require('../models/user')
+const helper =require('../helpers/rendering.js');
 const app = express();
-
 const multer =require('multer')
 const MAXSIZE_UPLOAD = 2*1024*1024; //un mega bite
 let filesize=undefined;
@@ -35,7 +35,7 @@ app.post('/upload/image',[authentication], function (req, res, next) {
             console.log(file.originalname + ' is starting ...')
         }
 
-      }); 
+      });
 
 
     let upload = multer({
@@ -83,16 +83,30 @@ app.post('/upload/image',[authentication], function (req, res, next) {
                 message: err.MulterError
             });
           }
-              let user_update ={profile_picture: req.file.filename};
+          let image_origin = req.file.filename;
+          let outputImageName , imagePath , outputImagePath;
+              //rendering image
+              helper.renderingImage (image_origin,200, 200, async function(paht){
+
+                let user_update ={profile_picture: paht};
                let user= await modelUser.updateUser(req.user_id,user_update);
-        res.status(200).json({
-            error: false,
-            message: `file uploaded.`,
-            user
-        });
+              return  res.status(200).json({
+                    error: false,
+                    message: `file uploaded.`,
+                    user
+                });
+
+              });
+
     });
 
 
   })
+
+  //
+  // const height = req.body.height || 200;
+  // const width = req.body.width || 200 ;
+
+
 
 module.exports=app;

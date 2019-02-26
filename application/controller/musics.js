@@ -182,7 +182,7 @@ async function getAllMusics(req, res) {
                       //==========================================================================
                       //check address
                         let address= await ModelAddress.getAddressByUser(user_id);
-                        console.log("pass ===")
+                      
                         if(address.length>0){
                           userInfomation.address= true;
                         }

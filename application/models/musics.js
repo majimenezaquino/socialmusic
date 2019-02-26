@@ -15,7 +15,7 @@ async function getAllMusics(_since,_limit) {
     let musics= await Musics.find({status: 'active'})
     .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
     .populate({ path: 'genre', select: 'name' })
-    .populate({ path: 'privacy', select: ['name','description'] })
+    .populate({ path: 'privacy', select: ['name'] })
     .skip(_since)
     .limit(_limit);
     return musics;
@@ -27,10 +27,10 @@ async function getAllMusicsPublic(_since=0,_limit=0,privacy_name="públicas") {
     let musics= await Musics.find({status: 'active', privacy: _privacy[0]._id})
     .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
     .populate({ path: 'genre', select: 'name' })
-    .populate({ path: 'privacy',
-     select: ['name','description'] })
+     .populate({ path: 'privacy', select: ['name','description'] })
     .skip(_since)
     .limit(_limit);
+    console.log("musics======",musics)
     return musics;
 }
 

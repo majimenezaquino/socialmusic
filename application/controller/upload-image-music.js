@@ -2,7 +2,10 @@ const express = require('express');
 const music_model =require('../models/musics')
 const {authentication}=require('../middlewares/authentication')
 const {UPLOADPATH}=require('../config/index')
-const modelUser =require('../models/user')
+const modelUser =require('../models/user');
+const modelNotification =require('../models/notification.js');
+const modelFollowes =require('../models/fallowers.js');
+const helper =require('../helpers/rendering.js');
 const app = express();
 
 const multer =require('multer')
@@ -24,6 +27,7 @@ function getRandomArbitrary(min, max) {
 
 
 app.put('/upload/music',[authentication], function (req, res, next) {
+  let user_id =req.user_id;
      let storage = multer.diskStorage({
         destination: function (req, file, cb) {
           cb(null, `${UPLOADPATH}/images`);
@@ -83,20 +87,50 @@ app.put('/upload/music',[authentication], function (req, res, next) {
                 message: err.MulterError
             });
           }
+          //rendering image
+          helper.renderingImage (req.file.filename,250, 250, async function(paht){
 
             let  music_update ={
               download_allowed:  req.body.download_allowed,
-              img: req.file.filename,
+              img: paht,
               privacy:  req.body.privacy,
               status: 'active'
             }
              let music_up = await music_model.updateMusic(req.body.id,music_update);
+
+              //get fallowers
+
+
+              if(music_up.status=='active'){
+                let fallowers =await modelFollowes.getAllFallowersByUser(user_id);
+                
+                let notification=fallowers.map(function(follow){
+                  return {
+                    user_published: user_id,
+                    user_target: follow. user_follower,
+                    title: `Musica`,
+                    description:`${music_up.title},${music_up.description}`,
+
+                  }
+                });
+
+                //insert notification
+                let notifications =await modelNotification.createNotification(notification);
+
+              }
+
+             //notification
 
         res.status(200).json({
             error: false,
             message: `file uploaded.`,
             music: music_up
         });
+
+          });
+
+
+
     });
 
 

@@ -124,7 +124,7 @@ const user_id =  req.user_id
                    message: `the genre is required`
                });
          }
-  console.log("nueva musica", new_music)
+
 
 
          const music = await music_model.createMusic(new_music);
