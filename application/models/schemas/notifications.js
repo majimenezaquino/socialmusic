@@ -10,6 +10,7 @@ const Schema = mongoose.Schema;
 const schemaNotification = new Schema({
     user_published: {type: Schema.Types.ObjectId, ref: 'Users'},
     user_target: {type: Schema.Types.ObjectId, ref: 'Users'},
+    key: { type: String, default: Date.now()},
     title:{ type: String, required: true},
     description:{ type: String, required: true},
     date_create: {

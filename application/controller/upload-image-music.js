@@ -6,6 +6,8 @@ const modelUser =require('../models/user');
 const modelNotification =require('../models/notification.js');
 const modelFollowes =require('../models/fallowers.js');
 const helper =require('../helpers/rendering.js');
+const fs =require("fs");
+const  md5 = require('md5');
 const app = express();
 
 const multer =require('multer')
@@ -88,27 +90,32 @@ app.put('/upload/music',[authentication], function (req, res, next) {
             });
           }
           //rendering image
-          helper.renderingImage (req.file.filename,250, 250, async function(paht){
-
+          helper.renderingImage (req.file.filename,250, 250, async function(path){
+            // let oldFile =`${UPLOADPATH}/images/${req.file.filename}`
+            // fs.unlinkSync(oldFile);
+          
             let  music_update ={
               download_allowed:  req.body.download_allowed,
-              img: paht,
+              img: path,
               privacy:  req.body.privacy,
               status: 'active'
             }
+
              let music_up = await music_model.updateMusic(req.body.id,music_update);
 
               //get fallowers
 
-
+                  let code =md5(Date.now());
               if(music_up.status=='active'){
                 let fallowers =await modelFollowes.getAllFallowersByUser(user_id);
-                
+
+
                 let notification=fallowers.map(function(follow){
                   return {
                     user_published: user_id,
                     user_target: follow. user_follower,
                     title: `Musica`,
+                    key:  code,
                     description:`${music_up.title},${music_up.description}`,
 
                   }
@@ -121,9 +128,10 @@ app.put('/upload/music',[authentication], function (req, res, next) {
 
              //notification
 
-        res.status(200).json({
+      return  res.status(200).json({
             error: false,
             message: `file uploaded.`,
+            notification_key: code,
             music: music_up
         });
 

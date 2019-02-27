@@ -1,35 +1,35 @@
 const sharp =require('sharp');
-const fs =require("fs")
+
 const {UPLOADPATH}=require('../config/index')
 function renderingImage (filename='',width=undefined, height=undefined,callback){
 
     let outputImageName , imagePath , outputImagePath;
   //renderizar image
-        let path = `${UPLOADPATH}/images/`;
 
         if(width===undefined && height===undefined){
-          return false;
+          callback(filename);
+          return true;
         }
 
+        let fromPath = `${UPLOADPATH}/images/${filename}`;
+        let toFile =`w${width}.h${height}.${filename}`;;
+        let toPath=`${UPLOADPATH}/images/${toFile}`;
 
-   imagePath = path+filename;
-   let path_img=`w${width}.h${height}.${filename}`;
-   outputImagePath = path+path_img;
 
-  sharp(imagePath)
+
+
+  sharp(fromPath)
   .resize(height, width, {
   kernel: sharp.kernel.nearest
   })
-  .toFile(outputImagePath)
-  .then( (ImageResult) => {
-  //eliminar imagen temporar
-
-  fs.unlinkSync(imagePath);
-  callback(path_img);
-  })
-  .catch ( (err) => {
-    return err;
+  .toFile(toPath,(err,info)=>{
+    if(err){
+      console.log("erro",err)
+    }
+    callback(toFile);
+  
   });
+
 
 }
 

@@ -30,7 +30,6 @@ async function getAllMusicsPublic(_since=0,_limit=0,privacy_name="públicas") {
      .populate({ path: 'privacy', select: ['name','description'] })
     .skip(_since)
     .limit(_limit);
-    console.log("musics======",musics)
     return musics;
 }
 
