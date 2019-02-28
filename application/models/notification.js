@@ -15,6 +15,13 @@ async function getNotification(user_id) {
     return notification;
 }
 
+async function getNotificationByKEy(_key) {
+    let notification= await Notification.find({key:_key, status: {$ne : "remove"}})
+    .populate({ path: 'user_target', select: ['name','last_name','profile_picture'] })
+    .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] });
+    return notification;
+}
+
 
 
 async function updateNotification(id,_notification) {
@@ -25,5 +32,6 @@ async function updateNotification(id,_notification) {
 module.exports={
     createNotification,
     updateNotification,
-    getNotification
+    getNotification,
+    getNotificationByKEy
 }
