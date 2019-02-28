@@ -21,5 +21,6 @@ router.use(require('./user_musician'))
 router.use(require('./follower'));
 router.use(require('./type-accounts'));
 router.use(require('./privacies.js'));
+router.use(require('./notification.js'));
 
 module.exports=router;

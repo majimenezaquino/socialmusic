@@ -3,7 +3,7 @@
 
 
  //status allower
- const status=['pending','viewed']
+ const status=['pending','viewed','remove']
 
 const Schema = mongoose.Schema;
 
