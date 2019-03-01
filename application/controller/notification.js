@@ -28,7 +28,30 @@ async function getNotification(req, res) {
     }
 
 
+    async function updateNotification(req, res) {
+        try{
+             //var for pagination
+             let user_id =req.user_id || '';
+             let lement_id =req.params.id;
+              let _notification= await modelNotification.updateNotification(lement_id,{status: 'remove'});
+
+              res.json({
+                  error: false,
+                  message: 'surccess',
+                  notificacion: _notification
+              })
+        }catch(ex){
+            res.status(400).json({
+                error: true,
+                message: 'error url not allower'
+
+            })
+        }
+        }
+
+
 
 module.exports={
-getNotification
+getNotification,
+updateNotification
 }
