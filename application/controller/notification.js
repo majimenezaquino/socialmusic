@@ -49,9 +49,37 @@ async function getNotification(req, res) {
         }
         }
 
+        async function viewedNotification(req, res) {
+            try{
+                 //var for pagination
+                 let user_id =req.user_id || '';
+                  let notification =req.body.notification;
+                    let _notification;
+                    let tmp_notification= [];
+                    for( let i in notification){
+                       _notification= await modelNotification.updateNotification(notification[i]._id,{status: 'viewed'});
+                       tmp_notification.push(_notification);
+                    }
+
+
+                  res.json({
+                      error: false,
+                      message: 'surccess',
+                      notification: tmp_notification
+                  })
+            }catch(ex){
+                res.status(400).json({
+                    error: true,
+                    message: 'error url not allower'
+
+                })
+            }
+            }
+
 
 
 module.exports={
 getNotification,
-updateNotification
+updateNotification,
+viewedNotification
 }
