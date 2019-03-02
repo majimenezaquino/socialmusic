@@ -14,7 +14,13 @@ async function getAllPrivacies() {
     return privacy;
 }
 
+async function getAllPrivacyById(id) {
+    let privacy= await Privacies.find({status: 'active', _id: id});
+    return privacy;
+}
+
 
 module.exports={
-    getAllPrivacies
+    getAllPrivacies,
+    getAllPrivacyById
 }

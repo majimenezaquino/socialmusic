@@ -5,6 +5,7 @@ const {UPLOADPATH}=require('../config/index')
 const modelUser =require('../models/user');
 const modelNotification =require('../models/notification.js');
 const modelFollowes =require('../models/fallowers.js');
+const modelPravacy =require('../models/privacies.js');
 const helper =require('../helpers/rendering.js');
 const fs =require("fs");
 const  md5 = require('md5');
@@ -90,19 +91,29 @@ app.put('/upload/music',[authentication], function (req, res, next) {
             });
           }
           //rendering image
-          helper.renderingImage (req.file.filename,250, 250, async function(path){
+          helper.renderingImage (req.file.filename,500, 500, async function(path){
             // let oldFile =`${UPLOADPATH}/images/${req.file.filename}`
             // fs.unlinkSync(oldFile);
-          
+
             let  music_update ={
               download_allowed:  req.body.download_allowed,
               img: path,
               privacy:  req.body.privacy,
               status: 'active'
             }
+              let privacy = await modelPravacy.getAllPrivacyById(req.body.privacy);
 
              let music_up = await music_model.updateMusic(req.body.id,music_update);
+             console.log(music_up)
+              if(privacy.name=='privada'){
 
+                      return  res.status(200).json({
+                            error: false,
+                            message: `file uploaded.`,
+                            notification_key: '',
+                            music: music_up
+                        });
+              }
               //get fallowers
 
                   let code =md5(Date.now());
@@ -114,7 +125,7 @@ app.put('/upload/music',[authentication], function (req, res, next) {
                   return {
                     user_published: user_id,
                     user_target: follow. user_follower,
-                    title: `Musica`,
+                    title: `Publicó una música`,
                     key:  code,
                     description:`${music_up.title},${music_up.description}`,
 
