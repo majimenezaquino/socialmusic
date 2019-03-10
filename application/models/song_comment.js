@@ -20,8 +20,11 @@ async function getAllSongCommentsByMusic(_music) {
     return songcomments;
 }
 
+
+
+
 async function getCountSongCommentsByMusic(_music) {
-    let songcomments= await SongComments.find({status: 'active',music_commented: _music}).count();
+    let songcomments= await SongComments.countDocuments({status: 'active',music_commented: _music});
     return songcomments;
 }
 

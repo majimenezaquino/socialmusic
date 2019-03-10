@@ -37,7 +37,7 @@ async function getAllMusicsPublic(_since=0,_limit=0,privacy_name="públicas") {
 
 
 async function getMusicById(music_id) {
-  let music= await Musics.find({status: 'active',privacy: 'public', _id: music_id})
+  let music= await Musics.find({status: 'active', _id: music_id})
   .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
   .populate({ path: 'genre', select: 'name' })
   return music;

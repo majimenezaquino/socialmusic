@@ -60,7 +60,6 @@ async function getAllMusics(req, res) {
         let id= req.params.id || 0;
 
               let music= await modelMusic.getMusicById(id);
-
               res.json({
                   error: false,
                   message: 'surccess',
