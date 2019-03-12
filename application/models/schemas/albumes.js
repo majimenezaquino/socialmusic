@@ -9,7 +9,7 @@ const Schema = mongoose.Schema;
 
 const schemaPlayLists = new Schema({
     name:{ type: String, required: true},
-    privacy:{ type: String,  enum: ['public','private','friends'], default: 'public'},
+    privacy:{type: Schema.Types.ObjectId, ref: 'Privacies', required: false},
     user_published: {type: Schema.Types.ObjectId, ref: 'Users'},
     musics_cout: {type: Number},
     img:{ type: String},

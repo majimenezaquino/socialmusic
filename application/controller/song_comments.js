@@ -44,7 +44,13 @@ async function createSongComments(req, res) {
 
 
           //notify to user  music uploaded if user is different to user  commented
-          if(user_upload_music_id!=req.user_id){
+            let user_upload_comment =notification.filter(function(notify){
+              return notify.user_target==user_upload_music_id;
+            })
+
+
+
+          if(!user_upload_comment.length>0 && user_upload_music_id!=req.user_id){
           notification.push( {
                   user_published: req.user_id,
                   user_target: user_upload_music_id,
@@ -63,7 +69,7 @@ async function createSongComments(req, res) {
       }
   }
 
-console.log("result===",result)
+
 
           //insert notification
           let notifications =await modelNotification.createNotification(result);
@@ -95,12 +101,13 @@ console.log("result===",result)
             const  songcomment_obj={
                 comment_message: body.comment,
               }
+            
 
-         let songcomment= await SongComments.updateSongComment(id,songcomment_obj);
+         let comment= await SongComments.updateSongComment(id,songcomment_obj);
               res.json({
                   error: false,
                   message: 'surccess, song comment was updated',
-                  songcomment
+                  comment
               })
         }catch(ex){
             res.status(400).json({
@@ -114,11 +121,11 @@ console.log("result===",result)
             try{
                 let id = req.params.id;
 
-             let playlist= await SongComments.deleteSongComment(id);
+             let comment= await SongComments.deleteSongComment(id);
                   res.json({
                       error: false,
                       message: 'surccess, song comment was disabled',
-                      playlist
+                      comment
                   })
             }catch(ex){
                 res.status(400).json({
