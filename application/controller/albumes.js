@@ -66,7 +66,7 @@ async function createAlbumes(req, res) {
 
         async function disabledAlbumes(req, res) {
             try{
-                let id = req.query.id;
+                let id = req.params.id;
 
              let albumes= await Albumes.disabledAlbumes(id);
                   res.json({
@@ -86,7 +86,7 @@ async function createAlbumes(req, res) {
 
 
 //get all suers
-    async function getAllAlbumesByUser(req, res) {
+    async function getAllAlbumes(req, res) {
         try{
             let user_id =req.user_id;
              //var for pagination
@@ -94,12 +94,11 @@ async function createAlbumes(req, res) {
         let _limit= 10; //nomber of item
         _since=Number(_since)
 
-              let albumes= await Albumes.getAllAlbumesByUser(user_id,_since,_limit);
+              let playlist= await Albumes.getAllAlbumes(_since,_limit);
               res.json({
                   error: false,
                   message: 'surccess',
-                //  count: await PlayList.getPlayListByAlbumCount(id),
-                albumes
+                playlist
               })
         }catch(ex){
             res.status(400).json({
@@ -133,7 +132,7 @@ module.exports={
     createAlbumes,
     updateAlbumes,
     disabledAlbumes,
-    getAllAlbumesByUser,
+    getAllAlbumes,
     getAlbumesById
 
 }

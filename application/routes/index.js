@@ -4,6 +4,8 @@ const router =express.Router();
 router.use(require('../controller/upload-images')) //upload music
 router.use(require('../controller/upload-musics')) //upload music
 router.use(require('../controller/upload-image-music')) //upload music
+router.use(require('../controller/create-playlist')) //upload music
+router.use(require('../controller/update-playlist.js')) //upload music
 router.use(require('./routes_static')) //all routes
 router.use(require('./address')) //address
 router.use(require('./user'))

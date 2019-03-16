@@ -90,27 +90,51 @@ async function createUser(req, res) {
 
 
 
-//get all suers
-    async function getAllUsers(req, res) {
-        try{
-             //var for pagination
-        let _since=req.query.since || 0;
-        let _limit= 10; //nomber of item
-        _since=Number(_since)
+            //get all suers
+                async function getAllUsers(req, res) {
+                    try{
+                         //var for pagination
+                    let _since=req.query.since || 0;
+                    let _limit= 10; //nomber of item
+                    _since=Number(_since)
 
-              let user= await modelUser.getAllUsers(_since,_limit);
-              res.json({
-                  error: false,
-                  message: 'surccess',
-                  users: user
-              })
-        }catch(ex){
-            res.status(400).json({
-                error: ex
+                          let user= await modelUser.getAllUsers(_since,_limit);
+                          res.json({
+                              error: false,
+                              message: 'surccess',
+                              users: user
+                          })
+                    }catch(ex){
+                        res.status(400).json({
+                            error: ex
 
-            })
-        }
-        }
+                        })
+                    }
+                    }
+
+
+
+
+                    //get all suers
+                        async function searchUser(req, res) {
+                            try{
+                                 //var for pagination
+                            let keyword =req.params.keyword;
+
+
+                                  let user= await modelUser.searchUser(keyword);
+                                  res.json({
+                                      error: false,
+                                      message: 'surccess',
+                                      users: user
+                                  })
+                            }catch(ex){
+                                res.status(400).json({
+                                    error: ex
+
+                                })
+                            }
+                            }
 
 
                 async function getUserById(req, res) {
@@ -151,7 +175,7 @@ async function createUser(req, res) {
                       }
                       }
 
-    
+
 
 
 module.exports={
@@ -160,6 +184,7 @@ module.exports={
     getUserById,
     updateUser,
     disabledUser,
-    getUserPublicById
+    getUserPublicById,
+    searchUser
 
 }

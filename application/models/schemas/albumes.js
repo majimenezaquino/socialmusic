@@ -13,6 +13,16 @@ const schemaPlayLists = new Schema({
     user_published: {type: Schema.Types.ObjectId, ref: 'Users'},
     musics_cout: {type: Number},
     img:{ type: String},
+    date_create: {
+        type: Date,
+        required: true,
+        default: Date.now()
+        },
+    date_update: {
+        type: Date,
+        required: true,
+        default: Date.now()
+      },
     status:{
       type: String,
       enum: status,

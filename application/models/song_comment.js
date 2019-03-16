@@ -34,6 +34,12 @@ async function getAllSongCommentsByUserCommented(_user) {
     return songcomments;
 }
 
+async function getSongCommentsById(id) {
+    let songcomments= await SongComments.find({_id: id ,status: 'active'})
+    .populate({ path: 'music_commented', select: ['title','url'] })
+    return songcomments;
+}
+
 
 
 async function updateSongComment(id,_comment) {
@@ -58,5 +64,6 @@ module.exports={
     getAllSongCommentsByUserCommented,
     getCountSongCommentsByMusic,
     updateSongComment,
+    getSongCommentsById,
     deleteSongComment
 }

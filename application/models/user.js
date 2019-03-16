@@ -24,6 +24,13 @@ async function getUserByEmailStatus(_email) {
     return users;
 }
 
+async function searchUser(keyword){
+      let users= await Users.find({$or:[  {"name": {$regex: ".*" + keyword + ".*"}},
+       {"last_name":{$regex: ".*" + keyword + ".*"}} ] ,status: {$ne: "blocked" } })
+       .limit(10);
+      return users;
+}
+
 
 async function getUserPublicById(id) {
     let user= await Users.find({_id: id});
@@ -52,5 +59,6 @@ module.exports={
     updateUser,
     disabledUser,
     getUserPublicById,
-    getUserByEmailStatus
+    getUserByEmailStatus,
+    searchUser
 }

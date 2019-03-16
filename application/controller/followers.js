@@ -102,16 +102,15 @@ async function createFallowers(req, res) {
                 async function getAllFallowersByUser(req, res) {
                     try{
                         let user_id =req.user_id;
-                        let albumid =req.params.id;
-                         //var for pagination
+
                     let _since=req.query.since || 0;
                     let _limit= 10; //nomber of item
                     _since=Number(_since)
-                          let playList= await ModelFollower.getAllFallowersByUser(user_id);
+                          let followers= await ModelFollower.getAllFallowersByUser(user_id);
                           res.json({
                               error: false,
                               message: 'surccess',
-                              playLists: playList
+                              followers
                           })
                     }catch(ex){
                         res.status(400).json({

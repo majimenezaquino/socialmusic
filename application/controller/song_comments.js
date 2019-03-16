@@ -101,7 +101,21 @@ async function createSongComments(req, res) {
             const  songcomment_obj={
                 comment_message: body.comment,
               }
-            
+
+                let commentget= await SongComments.getSongCommentsById(id);
+
+                  if(commentget[0].user_commented!=req.user_id){
+
+                    return res.json({
+                        error: true,
+                        message: 'Error user no allower',
+                        comment: []
+                    })
+                  }
+                  
+
+
+
 
          let comment= await SongComments.updateSongComment(id,songcomment_obj);
               res.json({
@@ -188,11 +202,11 @@ async function createSongComments(req, res) {
         async function getSongCommentsById(req, res) {
             let id = req.params.id;
             try{
-                  let playlist= await SongComments.getSongCommentsById(id);
+                  let comment= await SongComments.getSongCommentsById(id);
                   res.json({
                       error: false,
                       message: 'surccess',
-                      playlist
+                      comment
                   })
             }catch(ex){
                 res.status(400).json({

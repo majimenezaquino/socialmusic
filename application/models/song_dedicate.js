@@ -15,6 +15,8 @@ async function getAllSongDedicatedByUserReceive(_user) {
     return SongDedicate;
 }
 
+
+
 async function getAllSongDedicatedByUserDedicated(_user) {
     let SongDedicate= await schemaSongDedicate.find({status: 'active',user_dedicated: _user})
     .populate({ path: 'user_receive', select: ['name','last_name','profile_picture'] })

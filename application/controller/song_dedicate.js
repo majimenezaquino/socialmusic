@@ -10,14 +10,20 @@ async function createSongDedicate(req, res) {
         //obj SongDedicate temporary
         //check if user already reacted this music
 
-        const  SongDedicate_tmp={
-            type_dedicate: body.type_dedicate,
-            music_dedicated: body.music_id,
-            user_receive: body.user_receive,
-            user_dedicated: user_id
-      }
 
-          let SongDedicate= await modelSongDedicate.createSongDedicate(SongDedicate_tmp);
+      //set to array to save
+       let dedicaction =req.body.users.map(function(user){
+         return {
+           type_dedicate: body.type_dedicaction,
+           music_dedicated: body.music_id,
+           user_receive: user,
+           user_dedicated: user_id
+         }
+       });
+       console.log("SongDedicate",dedicaction)
+          let SongDedicate= await modelSongDedicate.createSongDedicate(dedicaction);
+
+
           res.json({
               error: false,
               message: 'Success, the song  was dedicated.',
