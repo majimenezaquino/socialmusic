@@ -9,9 +9,10 @@ async function createUserMusician(_musician) {
 }
 
 async function getAllUserMusicians(_since=0,_limit=0) {
-    let userMusicians= await ModelUserMusician.find({status: 'active'})
+  let userMusicians= await ModelUserMusician.find({status: 'active'})
     .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
-    .populate({ path: 'musician', select: ['name','description','icon'] })
+    .populate({ path: 'musicians.musician', select: ['name','description','icon'] })
+
     .skip(_since)
     .limit(_limit);
     return userMusicians;
@@ -22,8 +23,8 @@ async function getAllUserMusicians(_since=0,_limit=0) {
 async function getUserMusicianByUserAndMusician(user_id,_musician) {
 
     let userMusicians= await ModelUserMusician.find({status: 'active',user_published:user_id,musician:_musician})
-    .populate({ path: 'user_published',select: ['name','last_name','profile_picture'] })
-   .populate({ path: 'musician',select: ['name','description','icon']})
+    .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
+    .populate({ path: 'musicians.musician', select: ['name','description','icon'] })
 
     return userMusicians;
 }
@@ -44,10 +45,9 @@ async function getUserMusicianByMusician(_musician='',_since=0,_limit=10) {
 
 
 async function getMusicianByUser(user_id=undefined) {
-  let userMusicians= await ModelUserMusician.find({status: 'active'})
+  let userMusicians= await ModelUserMusician.find({status: 'active',user_published: user_id})
   .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
  .populate({ path: 'musicians.musician', select: ['name','description','icon'] })
-  console.log(userMusicians)
   return userMusicians;
 }
 
