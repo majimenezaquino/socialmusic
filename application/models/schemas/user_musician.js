@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const schemaUserMusician = new Schema({
 user_published: {type: Schema.Types.ObjectId, ref: 'Users'},
-musician:{type: Schema.Types.ObjectId, ref: 'Musicians'},
+musicians:[{musician:{type: Schema.Types.ObjectId, ref: 'Musicians'}}],
 description: String,
 
 date_create: {

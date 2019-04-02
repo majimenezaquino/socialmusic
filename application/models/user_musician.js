@@ -42,6 +42,16 @@ async function getUserMusicianByMusician(_musician='',_since=0,_limit=10) {
   return userMusicians;
 }
 
+
+async function getMusicianByUser(user_id=undefined) {
+  let userMusicians= await ModelUserMusician.find({status: 'active'})
+  .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
+ .populate({ path: 'musicians.musician', select: ['name','description','icon'] })
+  console.log(userMusicians)
+  return userMusicians;
+}
+
+
 async function updateUserMusician(id,_musician) {
     let userMusician= await ModelUserMusician.findOneAndUpdate({_id: id},_musician,{new: true});
     return userMusician;
@@ -55,6 +65,7 @@ async function deleteUserMusician(id) {
 module.exports={
     createUserMusician,
     getAllUserMusicians,
+    getMusicianByUser,
     getUserMusicianByMusician,
     getUserMusicianByUserAndMusician,
     updateUserMusician,

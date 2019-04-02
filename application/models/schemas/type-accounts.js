@@ -11,11 +11,16 @@ const SchemaTypeAccounts = new Schema({
        required: true,
         unique: true
        },
-    limit_upload: {
-        type: Number,
-        required: true,
-        default: 0
-    },
+       limit_upload: {
+           type: Number,
+           required: true,
+           default: 0
+       },
+       limit_musician: {
+           type: Number,
+           required: true,
+           default: 0
+       },
     days_upload: {
         type: Number,
         required: true,

@@ -1,7 +1,7 @@
 
 const ModelUSerMusician=require('../models/user_musician')
-
-
+ const ModelTypeAccounts= require('../models/type-accounts.js');
+const ModelUser= require('../models/user');
 
 async function createUserMusician(req, res) {
     try{
@@ -9,18 +9,18 @@ async function createUserMusician(req, res) {
 
         const obMusicians ={
           user_published: req.user_id, //params passed int middlewares
-          musician: body.musician_id,
+          musicians:body.musicians,
           description: body.description,
         }
-      const userMusician = await ModelUSerMusician.getUserMusicianByUserAndMusician(req.user_id,body.musician_id);
-      if(userMusician.length>0){
-    return    res.json({
-           error: true,
-           message: 'error, User had registro similar.',
-           userMusician
-
-       })
-      }
+    //   const userMusician = await ModelUSerMusician.getUserMusicianByUserAndMusician(req.user_id,body.musician_id);
+    //   if(userMusician.length>0){
+    // return    res.json({
+    //        error: true,
+    //        message: 'error, User had registro similar.',
+    //        userMusician
+    //
+    //    })
+    //   }
 
 
      const musician = await ModelUSerMusician.createUserMusician(obMusicians)
@@ -40,24 +40,52 @@ async function createUserMusician(req, res) {
     }
 
 
-    async function getAllUserMusicians(req, res) {
-        try{
+        async function getAllUserMusicians(req, res) {
+            try{
+                let user= await ModelUser.getUserById(req.user_id);
+                let  limit_musician =  await ModelTypeAccounts.getTypeAccountsById(user.typeaccounts);
 
-         const musicians = await ModelUSerMusician.getAllUserMusicians();
-         res.json({
-            error: false,
-            message: 'surccess',
-            musicians
-
-        })
-
-        }catch(ex){
-            res.status(400).json({
-                error: ex
+             const musicians = await ModelUSerMusician.getAllUserMusicians();
+             res.json({
+                error: false,
+                message: 'surccess',
+                musicians,
+                limit_musician
 
             })
-        }
-        }
+
+            }catch(ex){
+                res.status(400).json({
+                    error: ex
+
+                })
+            }
+            }
+
+
+
+                  async function getMusicianByUser(req, res) {
+                    try{
+                      let user_id =req.params.id;
+                        let user= await ModelUser.getUserById(req.user_id);
+                        let  limit_musician =  await ModelTypeAccounts.getTypeAccountsById(user.typeaccounts);
+
+                     const musicians = await ModelUSerMusician.getMusicianByUser();
+                     res.json({
+                        error: false,
+                        message: 'surccess',
+                        musicians,
+                        limit_musician: limit_musician[0].limit_musician || 0
+
+                    })
+
+                    }catch(ex){
+                        res.status(400).json({
+                            error: ex
+
+                        })
+                    }
+                    }
 
 
 
@@ -87,5 +115,6 @@ async function createUserMusician(req, res) {
 module.exports={
     createUserMusician,
     getAllUserMusicians,
+    getMusicianByUser,
     getUserMusicianByMusician
 }

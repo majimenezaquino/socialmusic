@@ -5,6 +5,7 @@ const {authentication ,checkAdminRol}=require('../middlewares/authentication')
 //router user
 router.post('/usermusician',[authentication],controllerUserMusician.createUserMusician);
 router.get('/usermusician',[authentication],controllerUserMusician.getAllUserMusicians);
+router.get('/usermusician/:id',[authentication],controllerUserMusician.getMusicianByUser);
 //router.get('/usermusician',[authentication],controllerUserMusician.getUserMusicianByUserAndMusician);
 //router.get('/musicdedicate/:music',[authentication],controllerdedicate.getAllSongDedicatesByMusic);
 // router.get('/musicdedicate/:music',[authentication],controllerdedicateds.getAlldedicatedsByMusicAndUser);
