@@ -20,7 +20,7 @@ async function createSongDedicate(req, res) {
            user_dedicated: user_id
          }
        });
-       console.log("SongDedicate",dedicaction)
+
           let SongDedicate= await modelSongDedicate.createSongDedicate(dedicaction);
 
 

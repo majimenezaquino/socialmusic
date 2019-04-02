@@ -7,7 +7,7 @@ async function createMusicsPlayList(req, res) {
         //check if user and playlist exist
 
       const  body=req.body;
-      
+
         let user_id= req.user_id;
         const  obPlaylist={
           music: body.music_id,
@@ -23,7 +23,7 @@ async function createMusicsPlayList(req, res) {
           })
 
         }
-        console.log(existMusicAndUser)
+
           let playlist= await MusicsPlayList.createMusicsPlayList(obPlaylist);
           res.json({
               error: false,

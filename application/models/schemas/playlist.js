@@ -34,7 +34,7 @@ const schemaMusicsPlayList = new Schema({
      default: 'active'
    }
 });
-
+//upload collection music and albumens
 schemaMusicsPlayList.pre('save',async function(next) {
   let music_id =this.music;
   let playlist_id =this.playlist;
@@ -42,8 +42,8 @@ schemaMusicsPlayList.pre('save',async function(next) {
  let musicCount = await this.constructor.countDocuments({status: 'active',music: music_id})+1;
  let music_update= await Musics.findByIdAndUpdate(music_id,{inplaylist: musicCount});
 
- let playlistCount = await this.constructor.countDocuments({status: 'active',playlist: playlist_id})+1;
- let playlist_update= await playlist.findByIdAndUpdate(playlist_id,{inplaylist: playlistCount});
+let playlistCount = await this.constructor.countDocuments({status: 'active',playlist: playlist_id})+1;
+let playlist_update= await Albumes.findByIdAndUpdate(playlist_id,{musics_cout: playlistCount});
 
 
 return next();
