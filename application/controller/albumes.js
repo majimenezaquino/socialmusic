@@ -85,28 +85,50 @@ async function createAlbumes(req, res) {
 
 
 
-//get all suers
-    async function getAllAlbumes(req, res) {
-        try{
-            let user_id =req.user_id;
-             //var for pagination
-        let _since=req.query.since || 0;
-        let _limit= 10; //nomber of item
-        _since=Number(_since)
+            //get all suers
+                async function getAllAlbumes(req, res) {
+                    try{
+                        let user_id =req.user_id;
+                         //var for pagination
+                    let _since=req.query.since || 0;
+                    let _limit= 10; //nomber of item
+                    _since=Number(_since)
 
-              let playlist= await Albumes.getAllAlbumes(_since,_limit);
-              res.json({
-                  error: false,
-                  message: 'surccess',
-                playlist
-              })
-        }catch(ex){
-            res.status(400).json({
-                error: ex
+                          let playlist= await Albumes.getAllAlbumes(_since,_limit);
+                          res.json({
+                              error: false,
+                              message: 'surccess',
+                            playlist
+                          })
+                    }catch(ex){
+                        res.status(400).json({
+                            error: ex
 
-            })
-        }
-        }
+                        })
+                    }
+                    }
+
+
+
+                    //get all suers
+                        async function getAllAlbumesByUser(req, res) {
+                            try{
+                                let user_id =req.user_id;
+
+
+                                  let playlist= await Albumes.getAllAlbumesByUser(user_id);
+                                  res.json({
+                                      error: false,
+                                      message: 'surccess',
+                                    playlist
+                                  })
+                            }catch(ex){
+                                res.status(400).json({
+                                    error: ex
+
+                                })
+                            }
+                            }
 
 
         async function getAlbumesById(req, res) {
@@ -133,6 +155,7 @@ module.exports={
     updateAlbumes,
     disabledAlbumes,
     getAllAlbumes,
-    getAlbumesById
+    getAlbumesById,
+    getAllAlbumesByUser
 
 }

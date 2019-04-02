@@ -7,11 +7,9 @@ async function createAlbumes(_Albumes) {
     return albumes;
 }
 
-async function getAllAlbumesByUser(_user=0,_since=0, _limit=10) {
+async function getAllAlbumesByUser(_user=0) {
     let albumes= await Albumes.find({user_published: _user, status: 'active'})
     .populate({path: 'user_published', select: ['name','last_name','profile_picture']})
-    .skip(_since)
-    .limit(_limit);
     return albumes;
 }
 

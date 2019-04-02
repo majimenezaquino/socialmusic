@@ -29,6 +29,12 @@ async function getMusicsPlayListById(id) {
 }
 
 
+async function getPlaylistByUserAndMusic(user_id,music_id,pl) {
+    let playlist= await MusicsPlayList.find({status: 'active', user_published: user_id,music:music_id ,playlist: pl});
+    return playlist;
+}
+
+
 
 
 async function updateMusicsPlayList(id,_playlist) {
@@ -51,5 +57,6 @@ module.exports={
     getMusicsPlayListById,
     getPlayListByAlbum,
     createMusicsPlayList,
-    getPlayListByAlbumCount
+    getPlayListByAlbumCount,
+    getPlaylistByUserAndMusic
 }

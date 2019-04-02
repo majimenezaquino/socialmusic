@@ -4,13 +4,26 @@ const MusicsPlayList =require('../models/playlist')
 //register new user
 async function createMusicsPlayList(req, res) {
     try{
+        //check if user and playlist exist
+
       const  body=req.body;
+      
         let user_id= req.user_id;
         const  obPlaylist={
-          music: body.music,
-          playlist: body.album,
-            user_created: user_id
+          music: body.music_id,
+          playlist: body.playlist_id,
+            user_published: user_id
       }
+
+        let existMusicAndUser =await MusicsPlayList.getPlaylistByUserAndMusic(user_id,body.music_id,body.playlist_id);
+        if(existMusicAndUser.length>0){
+        return  res.json({
+              error: true,
+              message: 'La música existe en esta lista de reproducción ',
+          })
+
+        }
+        console.log(existMusicAndUser)
           let playlist= await MusicsPlayList.createMusicsPlayList(obPlaylist);
           res.json({
               error: false,
@@ -33,12 +46,12 @@ async function createMusicsPlayList(req, res) {
         try{
             let id = req.query.id;
             let user_id= req.user_id;
-            body=req.body;
+          let   body=req.body;
 
             const  obPlaylist={
-                music: body.music,
-                playlist: body.album,
-                user_created: user_id
+                music: body.music_id,
+                playlist: body.playlist_id,
+                user_published: user_id
             }
          let playlist= await MusicsPlayList.updateMusicsPlayList(id,obPlaylist);
               res.json({
