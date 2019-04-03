@@ -70,7 +70,7 @@ async function createUserMusician(req, res) {
                         let user= await ModelUser.getUserById(req.user_id);
                         let  limit_musician =  await ModelTypeAccounts.getTypeAccountsById(user.typeaccounts);
 
-                     const musicians = await ModelUSerMusician.getMusicianByUser();
+                     const musicians = await ModelUSerMusician.getMusicianByUser(user_id);
                      res.json({
                         error: false,
                         message: 'surccess',

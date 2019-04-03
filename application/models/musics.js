@@ -44,13 +44,11 @@ async function getMusicById(music_id) {
 }
 
 
-async function getMusicsByUser(user_id='',_since=0,_limit=10) {
-  let music= await Musics.find({status: 'active',privacy: 'public', user_published: user_id})
-  .sort( { _id: -1 } )
+async function getMusicsByUser(user_id=undefined) {
+  let music= await Musics.find({status: 'active', user_published: user_id})
+  // .sort( { _id: -1 } )
   .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
   .populate({ path: 'genre', select: 'name' })
-  .skip(_since)
-  .limit(_limit);
   return music;
 }
 

@@ -78,17 +78,16 @@ async function getAllMusics(req, res) {
             try{
                  //var for pagination
             let user_id= req.params.id ||  req.user_id;
-            let _since=req.query.since || 0;
-            let _limit= 10; //nomber of item
-            _since=Number(_since)
-
+            console.log("user_id",user_id)
                   let musics= await modelMusic.getMusicsByUser(user_id);
+
 
                   res.json({
                       error: false,
                       message: 'surccess',
                       musics
-                  })
+                  });
+
             }catch(ex){
                 res.status(400).json({
                     error: true,
