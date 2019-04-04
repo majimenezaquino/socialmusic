@@ -52,6 +52,15 @@ async function getMusicianByUser(user_id=undefined) {
 }
 
 
+async function musicianSearch(keyfor) {
+  let userMusicians= await ModelUserMusician.find({status: 'active',user_published: user_id})
+  .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
+ .populate({ path: 'musicians.musician', select: ['name','description','icon'] })
+  return userMusicians;
+}
+
+
+
 async function updateUserMusician(id,_musician) {
     let userMusician= await ModelUserMusician.findOneAndUpdate({_id: id},_musician,{new: true});
     return userMusician;
