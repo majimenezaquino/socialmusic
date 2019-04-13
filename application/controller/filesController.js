@@ -18,7 +18,7 @@ if(typeFile=='music'){
 
 if(fs.existsSync(pathFiles)){
  res.sendFile(pathFiles)
-//  res.download(pathFiles)
+// res.download(pathFiles)
 }else{
   res.status(404).json({
     error: true,

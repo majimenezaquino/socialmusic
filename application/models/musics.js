@@ -44,6 +44,14 @@ async function getMusicById(music_id) {
 }
 
 
+async function getMusicFileName(_name) {
+  let music= await Musics.find({status: 'active', url: _name })
+  .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
+  .populate({ path: 'genre', select: 'name' })
+  return music;
+}
+
+
 async function getMusicsByUser(user_id=undefined) {
   let music= await Musics.find({status: 'active', user_published: user_id})
   // .sort( { _id: -1 } )
@@ -106,5 +114,6 @@ module.exports={
     ,getMusicsByUser,
     countMusicDocuments,
     countMusicUploadByUserDays,
-    getMusicsIncompleteByUser
+    getMusicsIncompleteByUser,
+    getMusicFileName
 }

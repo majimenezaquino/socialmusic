@@ -96,11 +96,12 @@ app.put('/upload/music',[authentication], function (req, res, next) {
             // fs.unlinkSync(oldFile);
 
             let  music_update ={
-              download_allowed:  req.body.download_allowed,
+              download_allowed: Boolean( req.body.download_allowed),
               img: path,
               privacy:  req.body.privacy,
               status: 'active'
             }
+            console.log(music_update);
               let privacy = await modelPravacy.getAllPrivacyById(req.body.privacy);
 
              let music_up = await music_model.updateMusic(req.body.id,music_update);

@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-
+const Musics =mongoose.model('Musics'); //import schemas music
 
 
 const Schema = mongoose.Schema;
@@ -25,6 +25,13 @@ status:{
    }
 });
 
+//upload collection music and albumens
+schemaSongDedicate.pre('save',async function(next) {
+  let music_id =this.music_dedicated;
+  let playlist_id =this.playlist;
+ let music_update= await Musics.findByIdAndUpdate(music_id,{$inc:{"dedicated":1 }});
+return next();
 
+});
 
 module.exports=mongoose.model('SongDedicate',schemaSongDedicate);
