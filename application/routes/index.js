@@ -24,5 +24,7 @@ router.use(require('./follower'));
 router.use(require('./type-accounts'));
 router.use(require('./privacies.js'));
 router.use(require('./notification.js'));
+router.use(require('./user-location.js'));
+router.use(require('./song-played.js'));
 
 module.exports=router;
