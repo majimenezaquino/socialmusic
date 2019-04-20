@@ -88,8 +88,8 @@ const user_id =  req.user_id
           title: body.title,
            description: body.description,
            tags: body.tags,
-           genres : body.genres.split(','), //id of genre
-           colaborations : body.colaborations.split(','), //id of genre
+           genres : body.genres.split(',') || [], //id of genre
+           colaborations : body.colaborations.split(',') || [], //id of genre
           user_published: user_id,
            qualification: 0,
            duration: getDuraction,

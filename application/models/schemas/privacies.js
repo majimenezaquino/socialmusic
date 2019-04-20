@@ -8,7 +8,7 @@
 const Schema = mongoose.Schema;
 
 const schemaPrivecies = new Schema({
-    name:{ type: String, required: true, unique: true},
+    name:{ type: String, required: true, unique: true ,default: 'privada'},
     description:{ type: String, required: true},
     status:{
       type: String,

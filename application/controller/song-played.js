@@ -1,6 +1,9 @@
 
-const modelSongDedicate =require('../models/song-played.js')
-
+const modelSongDedicate =require('../models/song-played.js');
+const Albumes =require('../models/albumes');
+const MusicsPlayList =require('../models/playlist')
+const Pravacy =require('../models/privacies.js');
+const ALBUMES_DEFULT ="Músicas vistas";
 //register new user
 async function creatPlayed(req, res) {
     try{
@@ -17,6 +20,42 @@ async function creatPlayed(req, res) {
        }else{
           played= await modelSongDedicate.creatPlayed(_locat);
        }
+            //*************************************************************************************
+            //create playlist is not exist
+              let alb =await  Albumes.getAlbumesByUserAndName(req.user_id,ALBUMES_DEFULT) || [];
+              if(alb.length>0){
+
+                ////
+
+
+                let existMusicAndUser =await MusicsPlayList.getPlaylistByUserAndMusic(req.user_id,body.music_id,alb[0]._id);
+                if(existMusicAndUser.length>0){
+                return  res.json({
+                      error: true,
+                      message: 'La música existe en esta lista de reproducción ',
+                  })
+                }
+      
+                const  obPlaylist={
+                  music: body.music_id,
+                  playlist: alb[0]._id,
+                  user_published: req.user_id
+              }
+
+                   await MusicsPlayList.createMusicsPlayList(obPlaylist);
+
+
+              }else{
+              let id_pravacy=  await   Pravacy.getAllPrivaciesByName('privada');
+                let albumes_tmp ={
+                    name: ALBUMES_DEFULT,
+                    privacy: id_pravacy[0]._id,
+                    user_published: req.user_id,
+                }
+                  let album_create =await  Albumes.createAlbumes(albumes_tmp)
+
+
+              }
 
 
 

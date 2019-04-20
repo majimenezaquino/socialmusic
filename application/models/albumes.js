@@ -13,6 +13,13 @@ async function getAllAlbumesByUser(_user=0) {
     return albumes;
 }
 
+async function getAlbumesByUserAndName(_user=0,_name) {
+    let albumes= await Albumes.find({user_published: _user, name: _name ,status: 'active'})
+    .populate({path: 'user_published', select: ['name','last_name','profile_picture']})
+    return albumes;
+}
+
+
 async function getAllAlbumes(_since=0, _limit=10) {
     let albumes= await Albumes.find({ status: 'active'})
     .populate({path: 'user_published', select: ['name','last_name','profile_picture']})
@@ -60,5 +67,6 @@ module.exports={
     getAlbumesById,
     getAllAlbumesByUser,
     createAlbumes,
-    getAllAlbumesByUserCount
+    getAllAlbumesByUserCount,
+    getAlbumesByUserAndName
 }

@@ -13,9 +13,15 @@ async function updatePlayed(id,_played) {
     return music_played;
 }
 
+async function getPlayedByUser(user_id,music_id) {
+    let music_played= await SchemaMusicPlayed.find({status: 'active', user_played: user_id ,music_played: music_id});
+    return music_played;
+}
+
 
 module.exports={
     creatPlayed,
-    updatePlayed
+    updatePlayed,
+    getPlayedByUser
 
 }
