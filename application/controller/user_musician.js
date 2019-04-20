@@ -12,6 +12,7 @@ async function createUserMusician(req, res) {
           musicians:body.musicians,
           description: body.description,
         }
+      
     //   const userMusician = await ModelUSerMusician.getUserMusicianByUserAndMusician(req.user_id,body.musician_id);
     //   if(userMusician.length>0){
     // return    res.json({

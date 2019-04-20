@@ -83,19 +83,23 @@ const user_id =  req.user_id
          //data musics
 
     let body= req.body
+
          const new_music ={
           title: body.title,
            description: body.description,
            tags: body.tags,
-           genre :body.genre, //id of genre
+           genres : body.genres.split(','), //id of genre
+           colaborations : body.colaborations.split(','), //id of genre
           user_published: user_id,
            qualification: 0,
            duration: getDuraction,
            size: req.file.size,
-           url: req.file.filename
+           url: req.file.filename,
+           status: 'active'
             // id  of user
          }
          //check response for user
+         console.log(new_music)
 
          if(body.title===undefined || body.title==''){
               return  res.status(400).json({
@@ -118,12 +122,12 @@ const user_id =  req.user_id
                });
          }
 
-         if(body.genre==undefined || body.genre==''){
-              return  res.status(400).json({
-                   error: true,
-                   message: `the genre is required`
-               });
-         }
+         // if(body.genre==undefined || body.genre==''){
+         //      return  res.status(400).json({
+         //           error: true,
+         //           message: `the genre is required`
+         //       });
+         // }
 
 
 
