@@ -3,7 +3,7 @@ const modelSongDedicate =require('../models/song-played.js');
 const Albumes =require('../models/albumes');
 const MusicsPlayList =require('../models/playlist')
 const Pravacy =require('../models/privacies.js');
-const ALBUMES_DEFULT ="Músicas vistas";
+const ALBUMES_DEFULT ="Músicas escuchadas";
 //register new user
 async function creatPlayed(req, res) {
     try{
@@ -35,7 +35,7 @@ async function creatPlayed(req, res) {
                       message: 'La música existe en esta lista de reproducción ',
                   })
                 }
-      
+
                 const  obPlaylist={
                   music: body.music_id,
                   playlist: alb[0]._id,

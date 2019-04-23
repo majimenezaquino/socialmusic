@@ -9,7 +9,7 @@ async function createMusicsPlayList(_listMusic) {
 
 async function getPlayListByAlbum(_playlist=0,_user=0,_since=0, _limit=10) {
     let playlist= await MusicsPlayList.find({playlist: _playlist,user_published: _user ,status: 'active'}).
-    populate({path: 'music', select: ['title','privacy','author','description','url','img']})
+    populate({path: 'music', select: ['title','privacy','author','description','reactions','url','img']})
     .populate({ path: 'user_published', select: ['name','last_name','profile_picture'] })
     .skip(_since)
     .limit(_limit);
