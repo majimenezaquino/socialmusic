@@ -80,16 +80,25 @@ const user_id =  req.user_id
          // check audios
         //get duration auios
       let getDuraction= await  getAudioDurationInSeconds(`${UPLOADPATH}/musics/${audio_url}`)
-         //data musics
 
-    let body= req.body
+      let body= req.body
+         //data musics
+        let _colaboration =function(){
+          let _colaborations=    body.colaborations.split(',');
+              _colaborations=   _colaborations.filter(function(b){
+                if(b!='') return b;
+           })
+              return _colaborations;
+         }
+
+
 
          const new_music ={
           title: body.title,
            description: body.description,
            tags: body.tags,
            genres : body.genres.split(',') || [], //id of genre
-           colaborations : body.colaborations.split(',') || [], //id of genre
+           colaborations :  _colaboration(), //id of genre
           user_published: user_id,
            qualification: 0,
            duration: getDuraction,
@@ -99,8 +108,7 @@ const user_id =  req.user_id
             // id  of user
          }
          //check response for user
-         console.log(new_music)
-
+        
          if(body.title===undefined || body.title==''){
               return  res.status(400).json({
                    error: true,

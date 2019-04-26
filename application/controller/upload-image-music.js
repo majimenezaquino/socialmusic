@@ -92,19 +92,11 @@ app.put('/upload/music',[authentication], function (req, res, next) {
           }
           //rendering image
           helper.renderingImage (req.file.filename,500, 500, async function(path){
-            // let oldFile =`${UPLOADPATH}/images/${req.file.filename}`
-            // fs.unlinkSync(oldFile);
 
-            let  music_update ={
-              download_allowed: Boolean( req.body.download_allowed),
-              img: path,
-              privacy:  req.body.privacy,
-              status: 'active'
-            }
-            console.log(music_update);
+            console.log(req.body);
               let privacy = await modelPravacy.getAllPrivacyById(req.body.privacy);
 
-             let music_up = await music_model.updateMusic(req.body.id,music_update);
+             let music_up = await music_model.updateMusic(req.body.music_id,{img: path});
              console.log(music_up)
               if(privacy.name=='privada'){
 
