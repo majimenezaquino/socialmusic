@@ -94,7 +94,7 @@ async function createAlbumes(req, res) {
                     let _limit= 10; //nomber of item
                     _since=Number(_since)
 
-                          let playlist= await Albumes.getAllAlbumes(_since,_limit);
+                          let playlist= await Albumes.getAllAlbumes(user_id,_since,_limit); 
                           res.json({
                               error: false,
                               message: 'surccess',

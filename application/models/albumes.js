@@ -1,5 +1,6 @@
 const Albumes =require('./schemas/albumes')
-
+const Privacy =require('./schemas/privacies')
+const Followers =require('./schemas/followers')
 
 
 async function createAlbumes(_Albumes) {
@@ -20,8 +21,16 @@ async function getAlbumesByUserAndName(_user=0,_name) {
 }
 
 
-async function getAllAlbumes(_since=0, _limit=10) {
-    let albumes= await Albumes.find({ status: 'active'})
+async function getAllAlbumes(user_id=0,_since=0, _limit=10) {
+   let _privacy= await Privacy.find({status: 'active', name: "públicas"});
+   let _privaci_follower= await Privacy.find({status: 'active', name: "Seguidores"});
+   let follower_id =undefined;
+   let   _followee= await Followers.find({status: 'active', user_follower: user_id});
+   if(_followee.length>0){
+     follower_id =_followee[0]._id;
+   }
+   //Seguidores
+    let albumes= await Albumes.find({ status: 'active',$or:[{user_published: user_id},{privacy: _privacy[0]._id},{privacy: follower_id}] })
     .populate({path: 'user_published', select: ['name','last_name','profile_picture']})
     .skip(_since)
     .limit(_limit);
