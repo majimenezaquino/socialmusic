@@ -99,7 +99,8 @@ const user_id =  req.user_id
            tags: body.tags,
            genres : body.genres.split(',') || [], //id of genre
            colaborations :  _colaboration(), //id of genre
-          user_published: user_id,
+           user_published: user_id,
+           download_allowed: body.download_allowed,
            qualification: 0,
            duration: getDuraction,
            size: req.file.size,
@@ -108,7 +109,7 @@ const user_id =  req.user_id
             // id  of user
          }
          //check response for user
-        
+
          if(body.title===undefined || body.title==''){
               return  res.status(400).json({
                    error: true,
@@ -130,14 +131,7 @@ const user_id =  req.user_id
                });
          }
 
-         // if(body.genre==undefined || body.genre==''){
-         //      return  res.status(400).json({
-         //           error: true,
-         //           message: `the genre is required`
-         //       });
-         // }
-
-
+    
 
          const music = await music_model.createMusic(new_music);
 
