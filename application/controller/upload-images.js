@@ -103,9 +103,7 @@ app.post('/upload/image',[authentication], function (req, res, next) {
 
   })
 
-  //
-  // const height = req.body.height || 200;
-  // const width = req.body.width || 200 ;
+
 
 
 

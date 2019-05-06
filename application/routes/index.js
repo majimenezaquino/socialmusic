@@ -26,5 +26,6 @@ router.use(require('./privacies.js'));
 router.use(require('./notification.js'));
 router.use(require('./user-location.js'));
 router.use(require('./song-played.js'));
+router.use(require('./entertainment-centers.js'));
 
 module.exports=router;
