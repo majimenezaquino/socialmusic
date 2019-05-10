@@ -6,7 +6,10 @@ user_published: {type: Schema.Types.ObjectId, ref: 'Users'},
 name:{ type: String, required: false},
 address:{ type: String, required: false},
 qualification:{ type: Number, max:5, min:0, default: 0},
-images:[{ image: String, required: false}],
+images:[{
+  image: {type: String, required: false},
+  primary: {type: Boolean, required: false, default: false}
+ }],
 date_create: {
     type: Date,
     required: true,

@@ -5,6 +5,7 @@ const app =express()
 const {SERVER_PORT, MONGO_DB_UIR}=require('../application/config');
 
 
+
 //parser require
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
@@ -42,3 +43,4 @@ mongoose.connect(MONGO_DB_UIR,{ useNewUrlParser: true }).then(()=>{
 
 //socket
  require('./socket.js')(server);
+ require('../application/config/data-init.js');
