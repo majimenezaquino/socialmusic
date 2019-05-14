@@ -1,5 +1,6 @@
 const modelEntertainment =require('../models/entertainment-centers-days.js');
 const {MONGO_DB_UIR,MONGO_DABASE_NAME}=require('./index');
+//data statica
  let weeks=
  [{name: "Lunes" ,laguage_code: "es"},
   {name: "Martes" ,laguage_code: "es"},
@@ -11,19 +12,13 @@ const {MONGO_DB_UIR,MONGO_DABASE_NAME}=require('./index');
 ];
 
 
-  // let entertainment =  modelEntertainment.createEntertainmentCentersDay(weeks);
 
-//   var MongoClient = require('mongodb').MongoClient;
-// var url = "mongodb://localhost:27017/";
-//
-// MongoClient.connect(url, function(err, db) {
-//   if (err) throw err;
-//   var dbo = db.db(MONGO_DABASE_NAME);
-//
-//   dbo.collection("EntertainmentCentersDay").insertOne(weeks, function(err, res) {
-//     if (err) throw err;
-//     db.close();
-//   });
-//
-//
-// });
+
+module.exports = async function(){
+  //set data date
+   let days =  await modelEntertainment.getAllEntertainmentCentersDay("es");
+  if(!days.length>0){
+    let entertainment =  await modelEntertainment.createEntertainmentCentersDay(weeks);
+  }
+
+}

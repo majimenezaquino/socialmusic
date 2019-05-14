@@ -13,11 +13,9 @@ async function updateEntertainmentCentersDay(_id,_entertainmentCenters) {
 }
 
 
-async function getAllEntertainmentCentersDay(_since=0, _limit=10) {
-    let EntertainmentCentersDay= await EntertainmentCentersDay.find({status: 'active'})
-    .skip(_since)
-    .limit(_limit);
-    return EntertainmentCentersDay;
+async function getAllEntertainmentCentersDay(_language =undefined) {
+    let entertainmentCentersDay= await EntertainmentCentersDay.find({laguage_code: _language });
+    return entertainmentCentersDay;
 }
 
 

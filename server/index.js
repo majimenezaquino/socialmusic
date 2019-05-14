@@ -23,7 +23,7 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
-
+ 
 
 //router principal api
 app.use('/api',require('../application/routes/index'));
@@ -43,4 +43,4 @@ mongoose.connect(MONGO_DB_UIR,{ useNewUrlParser: true }).then(()=>{
 
 //socket
  require('./socket.js')(server);
- require('../application/config/data-init.js');
+ require('../application/config/data-init.js')();
