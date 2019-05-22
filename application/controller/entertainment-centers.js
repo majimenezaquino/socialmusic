@@ -1,5 +1,6 @@
 
-const EntertainmentCenters =require('../models/entertainment-centers.js')
+const EntertainmentCenters =require('../models/entertainment-centers.js');
+const ModelEntertainmentDate =require('../models/entertainment-centers-days.js');
 const PlayList =require('../models/playlist')
 //register new user
 async function createEntertainmentCenters(req, res) {
@@ -24,6 +25,24 @@ async function createEntertainmentCenters(req, res) {
         })
     }
     }
+
+
+    async function getAllEntertainmentCentersDay(req, res) {
+        try{
+            let language = req.params.language || 'es';
+          
+              let hourentertainmentCenters= await ModelEntertainmentDate.getAllEntertainmentCentersDay(language)
+              res.json({
+                  error: false,
+                  schedules: hourentertainmentCenters
+              })
+        }catch(ex){
+            res.status(400).json({
+                error: ex
+
+            })
+        }
+        }
 
 
 
@@ -151,6 +170,5 @@ async function createEntertainmentCenters(req, res) {
 
 module.exports={
     createEntertainmentCenters,
-    
-
+    getAllEntertainmentCentersDay
 }
