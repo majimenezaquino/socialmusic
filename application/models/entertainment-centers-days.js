@@ -14,7 +14,8 @@ async function updateEntertainmentCentersDay(_id,_entertainmentCenters) {
 
 
 async function getAllEntertainmentCentersDay(_language =undefined) {
-    let entertainmentCentersDay= await EntertainmentCentersDay.find({laguage_code: _language });
+    let entertainmentCentersDay= await EntertainmentCentersDay.find({laguage_code: _language })
+    .sort({_id: 1});
     return entertainmentCentersDay;
 }
 

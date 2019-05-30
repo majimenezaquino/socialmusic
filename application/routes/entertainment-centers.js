@@ -4,7 +4,7 @@ const EntertainmentCenters=require('../controller/entertainment-centers.js')
 const {authentication ,checkAdminRol}=require('../middlewares/authentication')
 //router Followers
 router.post('/entertainmentcenters',[authentication],EntertainmentCenters.createEntertainmentCenters)
-router.post('/entertainmentcentersday/:language',[authentication],EntertainmentCenters.getAllEntertainmentCentersDay)
+router.get('/entertainmentcentersday/:language',[authentication],EntertainmentCenters.getAllEntertainmentCentersDay)
 // router.put('/followers/:id',[authentication,checkAdminRol],Followers.updateFollowers)
 //router.get('/followers/',[authentication],Followers.getAllFallowersByUser)
 //router.get('/entertainmentcenters/',[authentication],Followers.getAllFallowersByUser)

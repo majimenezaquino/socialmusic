@@ -8,10 +8,7 @@ address:{ type: String, required: false},
 latitud:{ type: String, required: false},
 longitud:{ type: String, required: false},
 qualification:{ type: Number, max:5, min:0, default: 0},
-images:[{
-  image: {type: String, required: false},
-  primary: {type: Boolean, required: false, default: false}
- }],
+image: {type: String, required: false},
 
  schedules:[{
    day: {type: Schema.Types.ObjectId, ref: 'EntertainmentCentersDay'},

@@ -11,7 +11,11 @@ const schemaPlaceEntertainment = new Schema({
    type: String,
    required: true,
     default: 'es'
-  }
+  },
+  open:{
+    type: Boolean,
+    default: false
+   }
 });
 
 
