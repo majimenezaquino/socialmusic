@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"socialmusic.genres"},{"v":2,"unique":true,"key":{"name":1},"name":"name_1","background":true,"ns":"socialmusic.genres"}],"uuid":"f10b08b66e7e4e00972ca88ab2eaa963"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"socialmusic.genres"},{"v":2,"unique":true,"key":{"name":1},"name":"name_1","ns":"socialmusic.genres","background":true}],"uuid":"340518c8806d45428bb4117fa2647e6c"}

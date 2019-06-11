@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"socialmusic.typeaccounts"},{"v":2,"unique":true,"key":{"name":1},"name":"name_1","ns":"socialmusic.typeaccounts","background":true}],"uuid":"c1168e7423c4436b9ddaa000cd6e2af2"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"socialmusic.typeaccounts"},{"v":2,"unique":true,"key":{"name":1},"name":"name_1","ns":"socialmusic.typeaccounts","background":true}],"uuid":"7e2f36593ca141d3aa23ee983367ed0d"}
