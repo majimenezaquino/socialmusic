@@ -1,0 +1,22 @@
+/* #content_wrapper {
+    background: #ab47bc !important;
+}
+
+body #app_wrapper #app_topnavbar-wrapper {
+    background-color: #313644 !important;
+    color: #fff;
+} */
+
+#content_wrapper {
+    background-color: #232323 !important;
+}
+body {
+    background-color: #232323 !important;
+    
+}
+body #app_wrapper #app_sidebar-left, body #app_wrapper #app_sidebar-left #app_main-menu-wrapper{
+    background-color: #232323 !important;}
+
+    body #app_wrapper #app_sidebar-left #app_main-menu-wrapper .nav-pills>li>a {
+        color: #fff;
+    }
