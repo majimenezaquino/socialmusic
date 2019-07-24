@@ -30,7 +30,7 @@ async function createEntertainmentCenters(req, res) {
     async function getAllEntertainmentCentersDay(req, res) {
         try{
             let language = req.params.language || 'es';
-          
+
               let hourentertainmentCenters= await ModelEntertainmentDate.getAllEntertainmentCentersDay(language)
               res.json({
                   error: false,
